@@ -10,6 +10,38 @@ void LoginAirMaster::showSignInWindow()
 
 }
 
+bool LoginAirMaster::signIn()
+{
+    //update loginName and password
+    //TODO
+    if(!judgeSignInValid())
+        return false;
+
+
+
+    return verifyCurrentUser();
+}
+
+bool LoginAirMaster::signUp()
+{
+    //update loginName and password
+    //TODO
+    if(!judgeSignUpValid())
+        return false;
+
+    return addUser();
+}
+
+bool LoginAirMaster::judgeSignUpValid()
+{
+
+}
+
+bool LoginAirMaster::judgeSignInValid()
+{
+
+}
+
 bool LoginAirMaster::loadSecretFile()
 {
     std::fstream readSecret("pas.air");
@@ -43,11 +75,20 @@ bool LoginAirMaster::loadSecretFile()
     }
 }
 
-bool LoginAirMaster::addUser(std::string loginName,std::string pass)
+bool LoginAirMaster::verifyCurrentUser()
 {
-    if(login2pass[loginName]!="")
+    std::string passEncrypt=AirEncrypter::encryptString(password).toStdString();
+    if(passEncrypt==login2pass[loginName.toStdString()])
+        return true;
+    else
+        return false;
+}
+
+bool LoginAirMaster::addUser()
+{
+    if(login2pass[loginName.toStdString()]!="")
     {
-        login2pass[loginName]=pass;
+        login2pass[loginName.toStdString()]=password.toStdString();
     }
     else
     {

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,13 +28,20 @@ SOURCES += \
         mainwindow.cpp \
     airconditionmaster.cpp \
     loginairmaster.cpp \
-    airencrypter.cpp
+    airencrypter.cpp \
+    resqueuehelper.cpp \
+    airpacket.cpp \
+    aircommon.cpp
 
 HEADERS += \
         mainwindow.h \
     airconditionmaster.h \
     loginairmaster.h \
-    airencrypter.h
+    airencrypter.h \
+    json.hpp \
+    resqueuehelper.h \
+    airpacket.h \
+    aircommon.h
 
 FORMS += \
         mainwindow.ui

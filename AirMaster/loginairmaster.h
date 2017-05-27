@@ -16,12 +16,17 @@ public:
     void changePassword();
     void showSignInWindow();
     void showSignUpWindow();
+    bool signIn();
+    bool signUp();
 
 private:
+    // 注册信息正确
+    bool judgeSignUpValid();
+    bool judgeSignInValid();
     // 加载密码文件
     bool loadSecretFile();
     bool verifyCurrentUser();
-    bool addUser(std::string loginName,std::string pass);
+    bool addUser();
     QString loginName;
     QString password;
     std::map<std::string,std::string> login2pass;  // loginName to password (encrypted)
