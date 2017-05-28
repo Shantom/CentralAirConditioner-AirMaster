@@ -96,5 +96,7 @@ public:
 };
 
 
+// util funciton for AirPacket
+std::string getJsonStrType(std::string& str);
 
 #endif // AIRPACKET_H

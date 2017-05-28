@@ -8,15 +8,36 @@ ReQueueHelper::ReQueueHelper(QObject *parent) : QObject(parent)
     connect(receiveServer,SIGNAL(newConnection()),this,SLOT(acceptConnection()));
 }
 
+ReQueueHelper::~ReQueueHelper()
+{
+    for(auto &m:allClients)
+    {
+        if(m)
+            delete m;
+    }
+
+    delete receiveServer;
+}
+
+void ReQueueHelper::initQueueHelper()
+{
+
+}
+
 void ReQueueHelper::startReceive()
 {
 
 }
 
+void ReQueueHelper::initPacketHandler(AirConditionMaster &airmaster)
+{
+    packHandler=new PacketHandler(airmaster);
+}
+
 void ReQueueHelper::acceptConnection()
 {
     QTcpSocket *clientConnection=receiveServer->nextPendingConnection();
-    TcpPipeToServant *clientPipe=new TcpPipeToServant(nullptr,clientConnection);
+    TcpPipeToServant *clientPipe=new TcpPipeToServant(nullptr,clientConnection,packHandler);
     allClients.push_back(clientPipe);
     qDebug()<<"new connection established";
    // QByteArray clientRes=clientConnection->readAll();

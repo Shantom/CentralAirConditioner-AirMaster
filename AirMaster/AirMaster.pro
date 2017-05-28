@@ -32,7 +32,8 @@ SOURCES += \
     airpacket.cpp \
     aircommon.cpp \
     requeuehelper.cpp \
-    tcppipetoservant.cpp
+    tcppipetoservant.cpp \
+    packethandler.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,7 +44,8 @@ HEADERS += \
     airpacket.h \
     aircommon.h \
     requeuehelper.h \
-    tcppipetoservant.h
+    tcppipetoservant.h \
+    packethandler.h
 
 FORMS += \
         mainwindow.ui

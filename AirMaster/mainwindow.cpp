@@ -23,5 +23,7 @@ void MainWindow::loginAdmin()
 
 void MainWindow::initWindow()
 {
+    airMaster=new AirConditionMaster();
     resQueueHelper=new ReQueueHelper();
+    resQueueHelper->initPacketHandler(*airMaster);
 }

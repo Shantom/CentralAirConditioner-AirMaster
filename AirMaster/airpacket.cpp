@@ -182,3 +182,9 @@ std::string CountFeeServer::toJsonStr()
     pac["bill"]=bill;
     return pac.dump();
 }
+
+std::string getJsonStrType(std::string &str)
+{
+    json pac=json::parse(str);
+    return pac["type"];
+}
