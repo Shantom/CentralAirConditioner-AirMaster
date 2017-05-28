@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <airconditionmaster.h>
-
+#include<requeuehelper.h>
 namespace Ui {
 class MainWindow;
 }
@@ -17,8 +17,11 @@ public:
     ~MainWindow();
 
     void loginAdmin();
+    void initWindow();
 private:
     Ui::MainWindow *ui;
+    AirConditionMaster *airMaster;
+    ReQueueHelper* resQueueHelper;
 
 };
 

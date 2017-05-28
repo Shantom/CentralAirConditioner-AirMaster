@@ -17,8 +17,6 @@ bool LoginAirMaster::signIn()
     if(!judgeSignInValid())
         return false;
 
-
-
     return verifyCurrentUser();
 }
 

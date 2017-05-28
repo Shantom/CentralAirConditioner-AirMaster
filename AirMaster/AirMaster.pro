@@ -29,9 +29,10 @@ SOURCES += \
     airconditionmaster.cpp \
     loginairmaster.cpp \
     airencrypter.cpp \
-    resqueuehelper.cpp \
     airpacket.cpp \
-    aircommon.cpp
+    aircommon.cpp \
+    requeuehelper.cpp \
+    tcppipetoservant.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,9 +40,10 @@ HEADERS += \
     loginairmaster.h \
     airencrypter.h \
     json.hpp \
-    resqueuehelper.h \
     airpacket.h \
-    aircommon.h
+    aircommon.h \
+    requeuehelper.h \
+    tcppipetoservant.h
 
 FORMS += \
         mainwindow.ui

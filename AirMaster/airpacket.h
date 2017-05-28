@@ -13,7 +13,6 @@ public:
     AirPacket();
     virtual std::string toJsonStr()=0;
 
-private:
     std::string sourceIp;
     int sourcePort;
 };
@@ -24,7 +23,6 @@ public:
     TemperatureClient(int _temp);
     TemperatureClient(std::string& packet);
     std::string toJsonStr();
-private:
     int temp;
 };
 
@@ -34,7 +32,6 @@ public:
     AuthClient(std::string _room,std::string _id);
     AuthClient(std::string& packet);
     std::string toJsonStr();
-private:
     std::string room;
     std::string id;
 };
@@ -45,7 +42,6 @@ public:
     StartWindClient(int _desttemp,std::string _velocity);
     StartWindClient(std::string& packet);
     std::string toJsonStr();
-private:
     int desttemp;
     int velocity;
 };
@@ -56,7 +52,7 @@ public:
     StopWindClient();
     StopWindClient(std::string& packet);
     std::string toJsonStr();
-private:
+
 
 };
 
@@ -66,7 +62,6 @@ public:
     FreshRateServer(int _freshperiod);
     FreshRateServer(std::string& packet);
     std::string toJsonStr();
-private:
     int freshperiod;
 };
 
@@ -76,7 +71,6 @@ public:
     WorkStateServer(std::string _workingmode,int _deftemp);
     WorkStateServer(std::string& packet);
     std::string toJsonStr();
-private:
     std::string workingmode;
     int defaulttemp;
 };
@@ -87,7 +81,6 @@ public:
     CountFeeServer(float kwh,float bill);
     CountFeeServer(std::string& packet);
     std::string toJsonStr();
-private:
     float kwh;
     float bill;
 };
@@ -98,7 +91,6 @@ public:
     SendWindServer(int windtemp,std::string velocity);
     SendWindServer(std::string& packet);
     std::string toJsonStr();
-private:
     int windtemp;
     std::string velocity;
 };

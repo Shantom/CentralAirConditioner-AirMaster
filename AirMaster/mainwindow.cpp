@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    initWindow();
 
 }
 
@@ -18,4 +19,9 @@ void MainWindow::loginAdmin()
 {
     LoginAirMaster loginer;
     loginer.showSignInWindow();
+}
+
+void MainWindow::initWindow()
+{
+    resQueueHelper=new ReQueueHelper();
 }
