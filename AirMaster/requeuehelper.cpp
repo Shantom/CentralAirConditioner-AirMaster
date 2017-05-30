@@ -1,6 +1,7 @@
 #include "requeuehelper.h"
 
-ReQueueHelper::ReQueueHelper(QObject *parent) : QObject(parent)
+ReQueueHelper::ReQueueHelper(QObject *parent, ResQueueHandler *resQueue)
+    : QObject(parent),resQueueHandler(resQueue)
 {
     receiveServer=new QTcpServer();
     receiveServer->listen(QHostAddress::Any,6666);
@@ -10,12 +11,6 @@ ReQueueHelper::ReQueueHelper(QObject *parent) : QObject(parent)
 
 ReQueueHelper::~ReQueueHelper()
 {
-    for(auto &m:allClients)
-    {
-        if(m)
-            delete m;
-    }
-
     delete receiveServer;
 }
 
@@ -29,16 +24,12 @@ void ReQueueHelper::startReceive()
 
 }
 
-void ReQueueHelper::initPacketHandler(AirConditionMaster &airmaster)
-{
-    packHandler=new PacketHandler(airmaster);
-}
-
 void ReQueueHelper::acceptConnection()
 {
     QTcpSocket *clientConnection=receiveServer->nextPendingConnection();
-    TcpPipeToServant *clientPipe=new TcpPipeToServant(nullptr,clientConnection,packHandler);
-    allClients.push_back(clientPipe);
+    TcpPipeToServant *clientPipe=new TcpPipeToServant(nullptr,clientConnection);
+    resQueueHandler->addTcpServant(clientPipe);
+
     qDebug()<<"new connection established";
    // QByteArray clientRes=clientConnection->readAll();
    // std::string clientR=clientRes.toStdString();
@@ -50,4 +41,9 @@ void ReQueueHelper::acceptConnection()
 void ReQueueHelper::receiveRequest()
 {
 
+}
+
+void ReQueueHelper::setResQueueHandler(ResQueueHandler *value)
+{
+    resQueueHandler = value;
 }

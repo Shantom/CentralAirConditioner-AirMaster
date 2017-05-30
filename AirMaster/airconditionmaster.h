@@ -4,7 +4,7 @@
 #include <airencrypter.h>
 #include <loginairmaster.h>
 #include <aircommon.h>
-
+#include <map>
 class AirConditionMaster
 {
 public:
@@ -21,6 +21,8 @@ public:
     std::string getCurrentModeStr() const;
 
 private:
+    std::map<std::string,bool> isFirstTemperature;
+
     WORK_MODE currentMode;
     int defaTemperature;
     std::string curVelocity;

@@ -24,3 +24,13 @@ std::string PacketHandler::handlePacketStr(std::string &str)
     }
 
 }
+
+std::string PacketHandler::constructSendPack(std::string packetType)
+{
+    if(packetType=="freshperiod")
+    {
+        FreshRateServer tc=FreshRateServer(airMaster.getFreshperiod());
+        qDebug()<<tc.toJsonStr().c_str();
+        return tc.toJsonStr();
+    }
+}

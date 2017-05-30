@@ -2,7 +2,9 @@
 #define REQUEUEHELPER_H
 #include<QtNetwork>
 #include <QObject>
+#include <queue>
 #include "tcppipetoservant.h"
+#include "resqueuehandler.h"
 #include "json.hpp"
 using json=nlohmann::json;
 
@@ -10,17 +12,17 @@ class ReQueueHelper : public QObject
 {
     Q_OBJECT
 public:
-    explicit ReQueueHelper(QObject *parent = nullptr);
+    explicit ReQueueHelper(QObject *parent = nullptr,ResQueueHandler* resQueue=nullptr);
     ~ReQueueHelper();
     void initQueueHelper();
     void startReceive();
-    void initPacketHandler(AirConditionMaster& airmaster);
+    void setResQueueHandler(ResQueueHandler *value);
+
 private:
 
     void receiveRequest();
     QTcpServer *receiveServer;
-    std::vector<TcpPipeToServant*> allClients;
-    PacketHandler* packHandler;
+    ResQueueHandler *resQueueHandler;
 signals:
 
 

@@ -23,6 +23,7 @@ private:
     AirConditionMaster *airMaster;
     ReQueueHelper* resQueueHelper;
 
+
 };
 
 #endif // MAINWINDOW_H

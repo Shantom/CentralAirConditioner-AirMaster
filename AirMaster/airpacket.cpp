@@ -185,6 +185,15 @@ std::string CountFeeServer::toJsonStr()
 
 std::string getJsonStrType(std::string &str)
 {
-    json pac=json::parse(str);
+    json pac;
+    try
+    {
+        pac=json::parse(str);
+    }
+    catch(nlohmann::detail::parse_error e)
+    {
+        return "none";
+    }
+
     return pac["type"];
 }

@@ -24,6 +24,9 @@ void MainWindow::loginAdmin()
 void MainWindow::initWindow()
 {
     airMaster=new AirConditionMaster();
-    resQueueHelper=new ReQueueHelper();
-    resQueueHelper->initPacketHandler(*airMaster);
+    PacketHandler* packHandler=new PacketHandler(*airMaster);
+    ResQueueHandler* queueHandler=new ResQueueHandler(packHandler);
+    resQueueHelper=new ReQueueHelper(nullptr,queueHandler);
+
+
 }
