@@ -16,7 +16,7 @@ TcpPipeToServant::~TcpPipeToServant()
 
 void TcpPipeToServant::sendFreshPeriod()
 {
-    examinePackHandler();
+//    examinePackHandler();
     std::string sendStr=packetHandler->constructSendPack("freshperiod");
     clientTcp->write(sendStr.c_str());
 }
@@ -26,28 +26,37 @@ void TcpPipeToServant::setClientTcp(QTcpSocket *value)
     clientTcp = value;
 }
 
-void TcpPipeToServant::examinePackHandler()
-{
-   if(!packetHandler)
-       throw "PacketHandler can't be nullptr";
-
-}
 
 void TcpPipeToServant::readPacket()
 {
     QString receiveStr=clientTcp->readAll();
     std::string pack=receiveStr.toStdString();
-    std::string packType=getJsonStrType(pack);
-    if(packType=="temp"||packType=="auth")
+    PACKET_TYPE packType=getJsonStrType(pack);
+    if(packType== TEMP_PACKET)
     {
-        examinePackHandler();
-        std::string sendStr=packetHandler->handlePacketStr(pack);
-        clientTcp->write(sendStr.c_str());
+        AirPacket* tempPacket=new TemperatureClient(pack);
+        addRequestCache(tempPacket);
+//        std::string sendStr=packetHandler->handlePacketStr(pack);
+ //       clientTcp->write(sendStr.c_str());
     }
-    else
+    else if(packType==AUTH_PACKET)
     {
+        AirPacket* authPacket=new AuthClient(pack);
+        addRequestCache(authPacket);
+//        std::string sendStr=packetHandler->handlePacketStr(pack);
+//        clientTcp->write(sendStr.c_str());
+    }
+    else if (packType == START_WIND_PACKET)
+    {
+        AirPacket* startWindPacket=new StartWindClient(pack);
+        addRequestCache(startWindPacket);
 
 //        attachQueueHelper();
+    }
+    else if(packType == STOP_WIND_PACKET)
+    {
+        AirPacket* stopWind=new StopWindClient(pack);
+        addRequestCache(stopWind);
     }
     qDebug()<<receiveStr;
 }
@@ -62,15 +71,15 @@ void TcpPipeToServant::setPacketHandler(PacketHandler *value)
     packetHandler = value;
 }
 
-void TcpPipeToServant::addRequestCache(std::string res)
+void TcpPipeToServant::addRequestCache(AirPacket* res)
 {
    requestCache.push(res);
    requestCacheCounter++;
 }
 
-std::string TcpPipeToServant::popRequestCache()
+AirPacket* TcpPipeToServant::popRequestCache()
 {
-    std::string res;
+    AirPacket* res;
     if(!requestCache.empty())
     {
         res=requestCache.front();

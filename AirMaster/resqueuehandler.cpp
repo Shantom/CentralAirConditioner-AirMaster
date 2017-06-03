@@ -19,9 +19,11 @@ void ResQueueHandler::monitoringServant()
     {
        for(auto &cl:allClients)
        {
-          if(cl->getRequestCacheCounter()>0)
-              //collect packet which need handling;
-              ;
+          if(cl->getRequestCacheCounter()>0){
+              allRequests[cl].push_back(cl->popRequestCache());
+          }
+          //collect packet which need handling;
+
        }
     }
 }

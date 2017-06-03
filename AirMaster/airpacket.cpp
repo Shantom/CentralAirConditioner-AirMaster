@@ -28,6 +28,11 @@ std::string TemperatureClient::toJsonStr()
     return pac.dump();
 }
 
+PACKET_TYPE TemperatureClient::getType()
+{
+   return TEMP_PACKET;
+}
+
 AuthClient::AuthClient(std::string _room, std::string _id)
     :room(_room),id(_id)
 {
@@ -53,6 +58,11 @@ std::string AuthClient::toJsonStr()
     return pac.dump();
 }
 
+PACKET_TYPE AuthClient::getType()
+{
+   return AUTH_PACKET;
+}
+
 StartWindClient::StartWindClient(int _desttemp, std::string _velocity)
     :desttemp(_desttemp),velocity(_desttemp)
 {
@@ -75,6 +85,11 @@ std::string StartWindClient::toJsonStr()
     return pac.dump();
 }
 
+PACKET_TYPE StartWindClient::getType()
+{
+   return START_WIND_PACKET;
+}
+
 StopWindClient::StopWindClient()
 {
 
@@ -91,6 +106,11 @@ std::string StopWindClient::toJsonStr()
     json pac;
     pac["type"]="stopwind";
     return pac.dump();
+}
+
+PACKET_TYPE StopWindClient::getType()
+{
+   return STOP_WIND_PACKET;
 }
 
 FreshRateServer::FreshRateServer(int _freshperiod)
@@ -112,6 +132,11 @@ std::string FreshRateServer::toJsonStr()
     pac["type"]="freshrate";
     pac["freshperiod"]=freshperiod;
     return pac.dump();
+}
+
+PACKET_TYPE FreshRateServer::getType()
+{
+   return FRESHRATE_PACKET;
 }
 
 SendWindServer::SendWindServer(int windtemp, std::string velocity)
@@ -137,6 +162,11 @@ std::string SendWindServer::toJsonStr()
     return pac.dump();
 }
 
+PACKET_TYPE SendWindServer::getType()
+{
+   return SEND_WIND_PACKET;
+}
+
 WorkStateServer::WorkStateServer(std::string _workingmode, int _deftemp)
     :workingmode(_workingmode),defaulttemp(_deftemp)
 {
@@ -158,6 +188,11 @@ std::string WorkStateServer::toJsonStr()
     pac["workingmode"]=workingmode;
     pac["defaulttemp"]=defaulttemp;
     return pac.dump();
+}
+
+PACKET_TYPE WorkStateServer::getType()
+{
+   return WORK_STATE_PACKET;
 }
 
 CountFeeServer::CountFeeServer(float kwh, float bill)
@@ -183,7 +218,12 @@ std::string CountFeeServer::toJsonStr()
     return pac.dump();
 }
 
-std::string getJsonStrType(std::string &str)
+PACKET_TYPE CountFeeServer::getType()
+{
+   return COUNT_FEE_PACKET;
+}
+
+PACKET_TYPE getJsonStrType(std::string &str)
 {
     json pac;
     try
@@ -192,8 +232,8 @@ std::string getJsonStrType(std::string &str)
     }
     catch(nlohmann::detail::parse_error e)
     {
-        return "none";
+        return ERROR_PACKET;
     }
 
-    return pac["type"];
+    return typeMap[pac["type"]];
 }

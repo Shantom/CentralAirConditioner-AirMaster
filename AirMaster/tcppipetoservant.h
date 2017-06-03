@@ -17,14 +17,15 @@ public:
     explicit TcpPipeToServant(QObject *parent = nullptr,QTcpSocket* _clientTcp=nullptr);
 
     ~TcpPipeToServant();
+//    void sendReplyPacket();
     void sendFreshPeriod();
     void setClientTcp(QTcpSocket *value);
-    void examinePackHandler();
+//    void examinePackHandler();
 
     void setPacketHandler(PacketHandler *value);
 
-    void addRequestCache(std::string res);
-    std::string popRequestCache();
+    void addRequestCache(AirPacket* res);
+    AirPacket* popRequestCache();
 
     int getRequestCacheCounter() const;
 
@@ -36,10 +37,11 @@ private:
 
     QTcpSocket* clientTcp;
     PacketHandler *packetHandler;
+    std::string temperature;
     std::string ip;
     std::string port;
 
-    std::queue<std::string> requestCache;
+    std::queue<AirPacket*> requestCache;
     int requestCacheCounter;
 
 };
