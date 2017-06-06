@@ -25,7 +25,7 @@ void MainWindow::initWindow()
 {
     airMaster=new AirConditionMaster();
     PacketHandler* packHandler=new PacketHandler(*airMaster);
-    ResQueueHandler* queueHandler=new ResQueueHandler(packHandler);
+    ResQueueHandler* queueHandler=new ResQueueHandler(nullptr,packHandler);
     resQueueHelper=new ReQueueHelper(nullptr,queueHandler);
 
 

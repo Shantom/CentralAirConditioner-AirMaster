@@ -20,7 +20,7 @@ public:
 //    void sendReplyPacket();
     void sendFreshPeriod();
     void setClientTcp(QTcpSocket *value);
-//    void examinePackHandler();
+//  void examinePackHandler();
 
     void setPacketHandler(PacketHandler *value);
 
