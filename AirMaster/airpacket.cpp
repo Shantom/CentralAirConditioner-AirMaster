@@ -43,7 +43,14 @@ AuthClient::AuthClient(std::string& packet)
 {
 
     lowerStr(packet);
-    json pac=json::parse(packet);
+    json pac;
+    try{
+        pac=json::parse(packet);
+    }
+     catch(json::exception e){
+         qDebug()<<"parse error";
+     }
+
     room=pac["room"];
     id=pac["id"];
 
@@ -64,7 +71,7 @@ PACKET_TYPE AuthClient::getType()
 }
 
 StartWindClient::StartWindClient(int _desttemp, std::string _velocity)
-    :desttemp(_desttemp),velocity(_desttemp)
+    :desttemp(_desttemp),velocity(_velocity)
 {
 
 }
@@ -74,6 +81,7 @@ StartWindClient::StartWindClient(std::string& packet)
     lowerStr(packet);
     json pac=json::parse(packet);
     desttemp=pac["desttemp"];
+    velocity = pac["velocity"];
 }
 
 std::string StartWindClient::toJsonStr()
@@ -232,6 +240,7 @@ PACKET_TYPE getJsonStrType(std::string &str)
     }
     catch(nlohmann::detail::parse_error e)
     {
+        qDebug()<<"parse error";
         return ERROR_PACKET;
     }
 

@@ -12,6 +12,7 @@ public:
     PacketHandler(AirConditionMaster& _airMaster);
     std::string handlePacketStr(std::string& str);
     std::string constructSendPack(std::string packetType);
+    std::string constructSendWind(std::string velocity);
 private:
     AirConditionMaster &airMaster;
     // FeeCounter

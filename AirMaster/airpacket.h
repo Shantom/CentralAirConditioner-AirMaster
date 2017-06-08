@@ -2,6 +2,7 @@
 #define AIRPACKET_H
 
 #include<string>
+#include<QDebug>
 #include"json.hpp"
 #include"aircommon.h"
 #include <map>
@@ -53,7 +54,7 @@ public:
     std::string toJsonStr();
     PACKET_TYPE  getType();
     int desttemp;
-    int velocity;
+    std::string velocity;
 };
 
 class StopWindClient:public AirPacket

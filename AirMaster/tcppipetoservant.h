@@ -19,6 +19,8 @@ public:
     ~TcpPipeToServant();
 //    void sendReplyPacket();
     void sendFreshPeriod();
+    void sendWorkingState();
+    void sendWind(std::string wind_velocity);
     void setClientTcp(QTcpSocket *value);
 //  void examinePackHandler();
 

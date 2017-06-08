@@ -34,4 +34,17 @@ std::string PacketHandler::constructSendPack(std::string packetType)
         qDebug()<<tc.toJsonStr().c_str();
         return tc.toJsonStr();
     }
+    else if (packetType == "workingstate"){
+        WorkStateServer ws = WorkStateServer(airMaster.getCurrentModeStr(),airMaster.getDefaTemperature());
+        qDebug()<<ws.toJsonStr().c_str();
+        return ws.toJsonStr();
+    }
+
+}
+
+std::string PacketHandler::constructSendWind(std::string velocity)
+{
+   SendWindServer ss = SendWindServer(airMaster.getDefaTemperature(),velocity);
+   qDebug()<<ss.toJsonStr().c_str();
+   return ss.toJsonStr();
 }

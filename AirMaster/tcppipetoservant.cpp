@@ -21,6 +21,18 @@ void TcpPipeToServant::sendFreshPeriod()
     clientTcp->write(sendStr.c_str());
 }
 
+void TcpPipeToServant::sendWorkingState()
+{
+    std::string sendStr = packetHandler->constructSendPack("workingstate");
+    clientTcp->write(sendStr.c_str());
+}
+
+void TcpPipeToServant::sendWind(std::string wind_velocity)
+{
+    std::string sendStr = packetHandler->constructSendWind(wind_velocity);
+    clientTcp->write(sendStr.c_str());
+}
+
 void TcpPipeToServant::setClientTcp(QTcpSocket *value)
 {
     clientTcp = value;
@@ -49,8 +61,8 @@ void TcpPipeToServant::readPacket()
     else if (packType == START_WIND_PACKET)
     {
         AirPacket* startWindPacket=new StartWindClient(pack);
+        qDebug()<<reinterpret_cast<StartWindClient*>(startWindPacket)->velocity.c_str();
         addRequestCache(startWindPacket);
-
 //        attachQueueHelper();
     }
     else if(packType == STOP_WIND_PACKET)
