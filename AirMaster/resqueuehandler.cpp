@@ -32,7 +32,9 @@ void ResQueueHandler::handlWindRequests()
              else{
                 cl->sendWind("NONE");
                 allServantsStatus[cl]->onLine = false;
-                workingCounter--;
+                if (workingCounter > 0){
+                    workingCounter--;
+                }
                 allRequests[cl].pop_front();
              }
        }

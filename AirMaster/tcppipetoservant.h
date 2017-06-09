@@ -5,6 +5,7 @@
 #include <QObject>
 #include <string>
 #include <queue>
+#include <vector>
 //#include <requeuehelper.h>
 #include <packethandler.h>
 #include "json.hpp"
@@ -37,6 +38,9 @@ public slots:
     void readPacket();
 private:
 
+    std::vector<std::string> parseJsonStr(std::string & originStr);
+    std::string parseOneJson(std::string & originStr);
+    std::string receiveStr;
     QTcpSocket* clientTcp;
     PacketHandler *packetHandler;
     std::string temperature;
