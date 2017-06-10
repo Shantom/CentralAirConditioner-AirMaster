@@ -20,12 +20,14 @@ void ResQueueHandler::handlWindRequests()
            if (allRequests[cl].size()>0){
              if (allRequests[cl].front()->getType() == START_WIND_PACKET){
                if (workingCounter < limitWorkingNum){
-                   cl->sendWind(reinterpret_cast<StartWindClient*>(allRequests[cl].front())->velocity);
-                   qDebug()<<reinterpret_cast<StartWindClient*>(allRequests[cl].front())->velocity.c_str();
+                   std::string velo = reinterpret_cast<StartWindClient*>(allRequests[cl].front())->velocity;
+                   cl->sendWind(velo.c_str());
+                   qDebug()<<velo.c_str();
                    workingCounter++;
 
                    // update servant status
                    allServantsStatus[cl]->onLine = true;
+                   allServantsStatus[cl]->velocity = true;
                    allRequests[cl].pop_front();
                }
              }

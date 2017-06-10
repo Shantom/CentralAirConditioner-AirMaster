@@ -37,7 +37,8 @@ SOURCES += \
     tcppipetoservant.cpp \
     packethandler.cpp \
     resqueuehandler.cpp \
-    airdatabase.cpp
+    airdatabase.cpp \
+    aireportsystem.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -51,7 +52,8 @@ HEADERS += \
     tcppipetoservant.h \
     packethandler.h \
     resqueuehandler.h \
-    airdatabase.h
+    airdatabase.h \
+    aireportsystem.h
 
 FORMS += \
         mainwindow.ui

@@ -3,6 +3,19 @@
 
 #include<string>
 #include<cwctype>
+
+typedef struct RequestInfo{
+    std::string roomId;
+    std::string start_time;
+    std::string end_time;
+    int start_temperature;
+    int end_temperature;
+    float fee;
+
+    bool complished;   // info is done or not
+}RequestInfo,*pRequestInfo;
+
+
 enum wind_velocity{
     wind_high=1,wind_medium=2,wind_low=3,wind_none=4
 };
