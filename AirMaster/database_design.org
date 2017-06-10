@@ -1,0 +1,21 @@
+* use redis
+**   room id
+*** switch_times
+*** all_requests
+**** request_id
+***** start_time
+***** end_time
+***** start_temperature
+***** end_temperature
+***** fee
+*** all_fee
+**** day_date
+***** one_day_fee (key is day date, value is this day's fee)
+**** month_date
+***** one_month_fee (key is month date, value is this month's fee)
+**** year_date
+***** one_year_fee (key is year date, value is this year's fee)
+
+
+   
+  

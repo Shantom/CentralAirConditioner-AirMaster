@@ -10,7 +10,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = AirMaster
 TEMPLATE = app
+LIBS += /usr/local/Cellar/hiredis/0.13.3/lib/libhiredis.a
 
+INCLUDEPATH +=/usr/local/include/
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -34,7 +36,8 @@ SOURCES += \
     requeuehelper.cpp \
     tcppipetoservant.cpp \
     packethandler.cpp \
-    resqueuehandler.cpp
+    resqueuehandler.cpp \
+    airdatabase.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -47,7 +50,8 @@ HEADERS += \
     requeuehelper.h \
     tcppipetoservant.h \
     packethandler.h \
-    resqueuehandler.h
+    resqueuehandler.h \
+    airdatabase.h
 
 FORMS += \
         mainwindow.ui
