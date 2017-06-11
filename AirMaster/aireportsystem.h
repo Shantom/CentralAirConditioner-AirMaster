@@ -14,7 +14,7 @@ public:
     // sync with database
     void syncDatabase();
 private:
-    std::list<pRequestInfo> allRequestsLog;
+//    std::list<pRequestInfo> allRequestsLog;
 };
 
 #endif // AIREPORTSYSTEM_H
