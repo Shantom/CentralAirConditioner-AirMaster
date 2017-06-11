@@ -7,8 +7,8 @@ PacketHandler::PacketHandler(AirConditionMaster &_airMaster)
 
 }
 
-std::string PacketHandler::handlePacketStr(std::string &str)
-{
+//std::string PacketHandler::handlePacketStr(std::string &str)
+//{
 //    std::string typeStr=getJsonStrType(str);
 //    if(typeStr=="temp")
 //    {
@@ -22,9 +22,9 @@ std::string PacketHandler::handlePacketStr(std::string &str)
 //        qDebug()<<ac.toJsonStr().c_str();
 //        return ac.toJsonStr();
 //   }
-    return "";
+//    return "";
 
-}
+//}
 
 std::string PacketHandler::constructSendPack(std::string packetType)
 {

@@ -11,8 +11,8 @@ typedef struct RequestInfo{
     int start_temperature;
     int end_temperature;
     float fee;
-
-    bool complished;   // info is done or not
+    std::string velocity;
+    bool complete;   // info is done or not
 }RequestInfo,*pRequestInfo;
 
 

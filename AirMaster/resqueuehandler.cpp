@@ -23,32 +23,35 @@ void ResQueueHandler::handlWindRequests()
                 if (workingCounter < limitWorkingNum){
                     std::string velo = reinterpret_cast<StartWindClient*>(allRequests[cl].front())->velocity;
                     cl->sendWind(velo.c_str());
-                    qDebug()<<velo.c_str();
-                  //  workingCounter++;
+                    // report system and count fee
 
                     // update servant status
-                    allServantsStatus[cl]->onLine = true;
-                    allServantsStatus[cl]->velocity = true;
+                    if (!allServantsStatus[cl]->working){
+                        workingCounter++;
+                        allServantsStatus[cl]->working = true;
+                    }
+                    allServantsStatus[cl]->velocity = velo;
                     allRequests[cl].pop_front();
                 }
             }
             else{
                 cl->sendWind("NONE");
-                allServantsStatus[cl]->onLine = false;
-                if (workingCounter > 0){
+                if (allServantsStatus[cl]->working){
                     workingCounter--;
+                    allServantsStatus[cl]->working = false;
                 }
+
                 allRequests[cl].pop_front();
             }
         }
     }
 }
 
-void ResQueueHandler::startPacketMonitor()
-{
+//void ResQueueHandler::startPacketMonitor()
+//{
     //monitorPacket=new std::thread(monitoringServant);
     //monitorPacket.join();
-}
+//}
 
 void ResQueueHandler::monitoringServant()
 { 
@@ -57,9 +60,6 @@ void ResQueueHandler::monitoringServant()
     {
         if(cl->getRequestCacheCounter()>0){
             AirPacket* rece = cl->popRequestCache();
-//            if (!rece){
-//                continue;
-//            }
             // get temperature packet and set current temperature
             if (rece->getType() == TEMP_PACKET){
                 if (!servantIsFirstTemp[cl]){
@@ -94,10 +94,10 @@ PacketHandler *ResQueueHandler::getPacketHandler() const
     return packetHandler;
 }
 
-void ResQueueHandler::initQueueHandler()
-{
+//void ResQueueHandler::initQueueHandler()
+//{
 
-}
+//}
 
 void ResQueueHandler::addTcpServant(TcpPipeToServant *servant)
 {
@@ -105,7 +105,7 @@ void ResQueueHandler::addTcpServant(TcpPipeToServant *servant)
     servant->setPacketHandler(packetHandler);
 
     // set servant status when connect to this servant
-    allServantsStatus[servant] = new ServantStatus(true,false, fakeTemperature);
+    allServantsStatus[servant] = new ServantStatus(true,false, fakeTemperature,false);
 }
 
 void ResQueueHandler::sendFreshperoid()

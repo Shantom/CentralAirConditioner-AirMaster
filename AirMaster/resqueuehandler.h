@@ -17,7 +17,8 @@ typedef struct ServantStatus{
     std::string room;
     std::string id;
     std::string velocity;
-    ServantStatus(bool _open,bool _onLine,int temp):open(_open),onLine(_onLine),currentTemperature(temp){
+    bool working;
+    ServantStatus(bool _open,bool _onLine,int temp, bool _working):open(_open),onLine(_onLine),currentTemperature(temp),working(_working){
 
     }
 }ServantStatus , *pServantStatus;
