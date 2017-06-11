@@ -16,14 +16,15 @@ ResQueueHandler::~ResQueueHandler()
 
 void ResQueueHandler::handlWindRequests()
 {
+   // qDebug()<<" handling ........";
     for (auto &cl: allClients){
         if (allRequests[cl].size()>0){
             if (allRequests[cl].front()->getType() == START_WIND_PACKET){
                 if (workingCounter < limitWorkingNum){
                     std::string velo = reinterpret_cast<StartWindClient*>(allRequests[cl].front())->velocity;
                     cl->sendWind(velo.c_str());
-                    //                   qDebug()<<velo.c_str();
-                    workingCounter++;
+                    qDebug()<<velo.c_str();
+                  //  workingCounter++;
 
                     // update servant status
                     allServantsStatus[cl]->onLine = true;
@@ -56,7 +57,9 @@ void ResQueueHandler::monitoringServant()
     {
         if(cl->getRequestCacheCounter()>0){
             AirPacket* rece = cl->popRequestCache();
-
+//            if (!rece){
+//                continue;
+//            }
             // get temperature packet and set current temperature
             if (rece->getType() == TEMP_PACKET){
                 if (!servantIsFirstTemp[cl]){
@@ -66,6 +69,7 @@ void ResQueueHandler::monitoringServant()
                 else{
                     allServantsStatus[cl]->currentTemperature = reinterpret_cast<TemperatureClient*>(rece)->temp;
                 }
+                qDebug()<<" get a temperature:    "<<rece->toJsonStr().c_str();
             }
             // get room,id for this tcp pipe, and set its status onLine
             else if (rece->getType() == AUTH_PACKET){
@@ -73,9 +77,11 @@ void ResQueueHandler::monitoringServant()
                 allServantsStatus[cl]->id = reinterpret_cast<AuthClient*>(rece)->id;
                 allServantsStatus[cl]->onLine = true;
                 cl->sendWorkingState();
+                qDebug()<<" get a auth:    "<<rece->toJsonStr().c_str();
             }
             // collecting wind requests
             else{
+                qDebug()<<" get a request:    "<<rece->toJsonStr().c_str();
                 allRequests[cl].push_back(rece);
             }
         }

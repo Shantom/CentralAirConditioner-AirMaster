@@ -73,7 +73,7 @@ void TcpPipeToServant::readPacket()
             AirPacket* stopWind=new StopWindClient(pack);
             addRequestCache(stopWind);
         }
-        qDebug()<<"<<"<<pack.c_str();
+
     }
 
 }
@@ -111,6 +111,9 @@ std::string TcpPipeToServant::parseOneJson(std::string &originStr)
 
 int TcpPipeToServant::getRequestCacheCounter() const
 {
+    if (requestCacheCounter <= 0){
+        return 0;
+    }
     return requestCacheCounter;
 }
 
@@ -127,12 +130,12 @@ void TcpPipeToServant::addRequestCache(AirPacket* res)
 
 AirPacket* TcpPipeToServant::popRequestCache()
 {
-    AirPacket* res;
+    AirPacket* res = nullptr;
     if(!requestCache.empty())
     {
         res=requestCache.front();
         requestCache.pop();
-        requestCacheCounter--;
+        requestCacheCounter = requestCache.size();
     }
     return res;
 }
