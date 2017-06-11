@@ -7,6 +7,7 @@
 ***** end_time
 ***** start_temperature
 ***** end_temperature
+***** velocity
 ***** fee
 *** all_fee
 **** day_date

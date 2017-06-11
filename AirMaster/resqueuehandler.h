@@ -40,6 +40,8 @@ public:
     void initQueueHandler();
     void addTcpServant(TcpPipeToServant* servant);
     void sendFreshperoid();
+    PacketHandler *getPacketHandler() const;
+
 signals:
 
 public slots:
@@ -51,6 +53,7 @@ private:
     std::list<TcpPipeToServant*> allHandling;
 
     std::map<TcpPipeToServant*, pServantStatus> allServantsStatus;
+    std::map<TcpPipeToServant*, bool> servantIsFirstTemp;
     // all wind requests at here
     std::map<TcpPipeToServant*,std::list<AirPacket*>> allRequests;
 

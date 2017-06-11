@@ -28,7 +28,8 @@ void ReQueueHelper::acceptConnection()
 {
     QTcpSocket *clientConnection=receiveServer->nextPendingConnection();
     TcpPipeToServant *clientPipe=new TcpPipeToServant(nullptr,clientConnection);
-    clientPipe->sendFreshPeriod();//*
+    clientPipe->setPacketHandler(resQueueHandler->getPacketHandler());
+    //clientPipe->sendFreshPeriod();//*
     resQueueHandler->addTcpServant(clientPipe);
 
     qDebug()<<"new connection established";
