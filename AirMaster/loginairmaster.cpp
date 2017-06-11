@@ -32,12 +32,14 @@ bool LoginAirMaster::signUp()
 
 bool LoginAirMaster::judgeSignUpValid()
 {
-
+    //todo
+    return true;
 }
 
 bool LoginAirMaster::judgeSignInValid()
 {
-
+    //todo
+    return true;
 }
 
 bool LoginAirMaster::loadSecretFile()
@@ -92,4 +94,7 @@ bool LoginAirMaster::addUser()
     {
 
     }
+    //todo
+    return true;
+
 }

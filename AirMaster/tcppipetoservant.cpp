@@ -64,7 +64,7 @@ void TcpPipeToServant::readPacket()
         else if (packType == START_WIND_PACKET)
         {
             AirPacket* startWindPacket=new StartWindClient(pack);
-            qDebug()<<reinterpret_cast<StartWindClient*>(startWindPacket)->velocity.c_str();
+//            qDebug()<<reinterpret_cast<StartWindClient*>(startWindPacket)->velocity.c_str();
             addRequestCache(startWindPacket);
             //        attachQueueHelper();
         }
@@ -73,7 +73,7 @@ void TcpPipeToServant::readPacket()
             AirPacket* stopWind=new StopWindClient(pack);
             addRequestCache(stopWind);
         }
-        qDebug()<<pack.c_str();
+        qDebug()<<"<<"<<pack.c_str();
     }
 
 }

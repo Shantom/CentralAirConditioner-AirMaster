@@ -22,7 +22,7 @@ void ResQueueHandler::handlWindRequests()
                if (workingCounter < limitWorkingNum){
                    std::string velo = reinterpret_cast<StartWindClient*>(allRequests[cl].front())->velocity;
                    cl->sendWind(velo.c_str());
-                   qDebug()<<velo.c_str();
+//                   qDebug()<<velo.c_str();
                    workingCounter++;
 
                    // update servant status
