@@ -4,3 +4,4 @@ chart.org
 doxgen_output/
 Debug /
 *.user*
+*rdb

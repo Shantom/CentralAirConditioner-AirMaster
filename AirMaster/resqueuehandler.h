@@ -37,8 +37,8 @@ public:
     void handlWindRequests();
 
     // monitoring servants and get new packets
-    void startPacketMonitor();
-    void initQueueHandler();
+//    void startPacketMonitor();
+//    void initQueueHandler();
     void addTcpServant(TcpPipeToServant* servant);
     void sendFreshperoid();
     PacketHandler *getPacketHandler() const;

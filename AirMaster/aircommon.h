@@ -6,6 +6,7 @@
 
 typedef struct RequestInfo{
     std::string roomId;
+    std::string userId;
     std::string start_time;
     std::string end_time;
     int start_temperature;
@@ -13,6 +14,12 @@ typedef struct RequestInfo{
     float fee;
     std::string velocity;
     bool complete;   // info is done or not
+
+    RequestInfo(std::string _roomId, std::string _start_time, int _start_temperature, std::string _velocity, bool _complete)
+        :roomId(_roomId),start_time(_start_time),velocity(_velocity),complete(_complete)
+    {
+
+    }
 }RequestInfo,*pRequestInfo;
 
 
