@@ -20,7 +20,10 @@ public:
     void initWindow();
 private:
     Ui::MainWindow *ui;
+
+    // include Master's info, you can change it at main UI
     AirConditionMaster *airMaster;
+
     ReQueueHelper* resQueueHelper;
 
 

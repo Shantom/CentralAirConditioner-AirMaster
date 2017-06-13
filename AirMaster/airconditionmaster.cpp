@@ -7,7 +7,7 @@ AirConditionMaster::AirConditionMaster()
 
 void AirConditionMaster::initMaster()
 {
-    freshperiod=1;
+    freshperiod=6;
     defaTemperature=14;
     currentMode=COLD;
 }

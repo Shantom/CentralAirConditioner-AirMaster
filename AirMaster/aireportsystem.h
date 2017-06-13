@@ -3,6 +3,8 @@
 
 #include <string>
 #include <list>
+#include <vector>
+#include <map>
 #include <aircommon.h>
 
 
@@ -14,7 +16,15 @@ public:
     // sync with database
     void syncDatabase();
 private:
-//    std::list<pRequestInfo> allRequestsLog;
+
+    std::string currentTimeStamp();
+
+
+    // cached uncomplete RequestInfo
+    std::list<pRequestInfo> allCachedRequests;
+
+    // key is roomId, value is its ReqeustInfos
+    std::map<std::string, std::vector<pRequestInfo>> allCompleteRequests;
 };
 
 #endif // AIREPORTSYSTEM_H

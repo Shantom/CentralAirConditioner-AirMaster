@@ -5,3 +5,4 @@ doxgen_output/
 Debug /
 *.user*
 *.user
+*rdb
