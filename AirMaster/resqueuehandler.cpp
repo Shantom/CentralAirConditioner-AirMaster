@@ -16,14 +16,20 @@ ResQueueHandler::~ResQueueHandler()
 
 void ResQueueHandler::handlWindRequests()
 {
-   // qDebug()<<" handling ........";
+    // qDebug()<<" handling ........";
     for (auto &cl: allClients){
         if (allRequests[cl].size()>0){
             if (allRequests[cl].front()->getType() == START_WIND_PACKET){
                 if (workingCounter < limitWorkingNum){
                     std::string velo = reinterpret_cast<StartWindClient*>(allRequests[cl].front())->velocity;
                     cl->sendWind(velo.c_str());
+
                     // report system and count fee
+                    if (allServantsStatus[cl]->working){
+                        updateRequestInfoStop(cl);
+                    }
+                    addRequestInfoStart(cl);
+
 
                     // update servant status
                     if (!allServantsStatus[cl]->working){
@@ -35,6 +41,8 @@ void ResQueueHandler::handlWindRequests()
                 }
             }
             else{
+                updateRequestInfoStop(cl);
+
                 cl->sendWind("NONE");
                 if (allServantsStatus[cl]->working){
                     workingCounter--;
@@ -49,8 +57,8 @@ void ResQueueHandler::handlWindRequests()
 
 //void ResQueueHandler::startPacketMonitor()
 //{
-    //monitorPacket=new std::thread(monitoringServant);
-    //monitorPacket.join();
+//monitorPacket=new std::thread(monitoringServant);
+//monitorPacket.join();
 //}
 
 void ResQueueHandler::monitoringServant()
@@ -87,6 +95,42 @@ void ResQueueHandler::monitoringServant()
         }
     }
     handlWindRequests();
+}
+
+std::string ResQueueHandler::currentTimeStamp()
+{
+    std::time_t now = std::time(nullptr);
+    std::ostringstream oss;
+    oss << std::put_time(std::localtime(&now), "%d-%m-%Y %H-%M-%S");
+    std::string nowTime = oss.str();
+    return nowTime;
+}
+
+void ResQueueHandler::updateRequestInfoStop(TcpPipeToServant *cl)
+{
+    std::string roomId = allServantsStatus[cl]->room;
+
+    // update last uncomplete RequestInfo
+    pRequestInfo lastRequestInfo = airReportor->getRoomRequestInfo(roomId);
+    lastRequestInfo->complete = true;
+    lastRequestInfo->end_temperature = allServantsStatus[cl]->currentTemperature;
+    lastRequestInfo->end_time = currentTimeStamp();
+    airReportor->updateRequestComplete(lastRequestInfo);
+}
+
+void ResQueueHandler::addRequestInfoStart(TcpPipeToServant* servant)
+{
+
+    // generate a new uncomplete RequestInfo
+    pRequestInfo newInfo = new RequestInfo();
+    newInfo->complete = false;
+    newInfo->roomId = allServantsStatus[cl]->room ;
+    newInfo->start_temperature = allServantsStatus[cl]->currentTemperature;
+    newInfo->start_time = currentTimeStamp();
+    newInfo->velocity = velo;
+
+    airReportor->addNewRequestInfo(newInfo);
+
 }
 
 PacketHandler *ResQueueHandler::getPacketHandler() const

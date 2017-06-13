@@ -5,6 +5,9 @@
 #include <list>
 #include <vector>
 #include <map>
+#include <iomanip>
+#include <ctime>
+#include <sstream>
 #include <aircommon.h>
 
 
@@ -15,13 +18,23 @@ public:
 
     // sync with database
     void syncDatabase();
+
+    // this uncomplete requestInfo will be added into cache
+    void addNewRequestInfo(pRequestInfo newResquest);
+
+    // get some room's last uncomplete RequestInfo
+    pRequestInfo getRoomRequestInfo(std::string roomId);
+
+    // request stop, update and fill a complete requestinfo
+    void updateRequestComplete(pRequestInfo completeRequestInfo);
+
 private:
 
-    std::string currentTimeStamp();
+
 
 
     // cached uncomplete RequestInfo
-    std::list<pRequestInfo> allCachedRequests;
+     std::map<std::string, pRequestInfo> allCachedRequests;
 
     // key is roomId, value is its ReqeustInfos
     std::map<std::string, std::vector<pRequestInfo>> allCompleteRequests;

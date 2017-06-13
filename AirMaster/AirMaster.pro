@@ -38,7 +38,8 @@ SOURCES += \
     packethandler.cpp \
     resqueuehandler.cpp \
     airdatabase.cpp \
-    aireportsystem.cpp
+    aireportsystem.cpp \
+    airfee.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -53,7 +54,8 @@ HEADERS += \
     packethandler.h \
     resqueuehandler.h \
     airdatabase.h \
-    aireportsystem.h
+    aireportsystem.h \
+    airfee.h
 
 FORMS += \
         mainwindow.ui
