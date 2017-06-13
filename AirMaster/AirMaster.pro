@@ -39,7 +39,8 @@ SOURCES += \
     resqueuehandler.cpp \
     airdatabase.cpp \
     aireportsystem.cpp \
-    airfee.cpp
+    airfee.cpp \
+    logindialog.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -55,7 +56,9 @@ HEADERS += \
     resqueuehandler.h \
     airdatabase.h \
     aireportsystem.h \
-    airfee.h
+    airfee.h \
+    logindialog.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    logindialog.ui

@@ -17,6 +17,8 @@ public:
     void initQueueHelper();
     void startReceive();
     void setResQueueHandler(ResQueueHandler *value);
+    std::map<TcpPipeToServant*, pServantStatus> getAllServantsStatus() const
+    {return resQueueHandler->getAllServantsStatus();}
 
 private:
 

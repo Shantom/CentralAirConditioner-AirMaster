@@ -21,15 +21,14 @@ typedef struct ServantStatus{
     std::string id;
     std::string velocity;
     bool working;
-    ServantStatus(bool _open,bool _onLine,int temp, bool _working):open(_open),onLine(_onLine),currentTemperature(temp),working(_working){
-
-    }
+    ServantStatus(bool _open,bool _onLine,int temp, bool _working)
+        :open(_open),onLine(_onLine),currentTemperature(temp),working(_working){}
 }ServantStatus , *pServantStatus;
 
 
 class ResQueueHandler: public QObject
 {
-   Q_OBJECT
+    Q_OBJECT
 
     static const int fakeTemperature = -999;
     static const int limitWorkingNum = 3;
@@ -45,6 +44,7 @@ public:
     void addTcpServant(TcpPipeToServant* servant);
     void sendFreshperoid();
     PacketHandler *getPacketHandler() const;
+    std::map<TcpPipeToServant*, pServantStatus> getAllServantsStatus() const{return allServantsStatus;}
 
 signals:
 

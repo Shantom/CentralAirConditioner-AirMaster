@@ -16,8 +16,18 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void loginAdmin();
     void initWindow();
+private slots:
+    void on_pushButton_up_clicked();
+
+    void on_pushButton_down_clicked();
+
+    void on_pushButton_cool_clicked();
+
+    void on_pushButton_heat_clicked();
+
+    void on_pushButton_set_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -26,6 +36,8 @@ private:
 
     ReQueueHelper* resQueueHelper;
 
+    int upperBound=23;
+    int lowerBound=14;
 
 };
 

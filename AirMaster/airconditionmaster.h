@@ -15,10 +15,14 @@ public:
     void setCurrentMode(const WORK_MODE &value);
 
     int getFreshperiod() const;
+    void setFreshperiod(const int& value){freshperiod=value;}
 
     int getDefaTemperature() const;
+    void setDefaTemperature(const int& value){defaTemperature=value;}
 
     std::string getCurrentModeStr() const;
+    void setCurrentModeStr(const std::string& value)
+    {currentMode=value=="COLD"?COLD:HOT;}
 
 private:
     std::map<std::string,bool> isFirstTemperature;
