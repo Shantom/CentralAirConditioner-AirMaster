@@ -5,6 +5,11 @@ AirDatabase::AirDatabase()
 
 }
 
+AirDatabase::~AirDatabase()
+{
+    redisFree(connector);
+}
+
 bool AirDatabase::connectDatabase(std::string address, int port)
 {
    connector = redisConnect(address.c_str(),port);
@@ -18,6 +23,28 @@ bool AirDatabase::connectDatabase(std::string address, int port)
        return false;
    }
    qDebug()<<"connect successfully";
+
+   // init maxRequestNum
    return true;
+}
+
+void AirDatabase::addRequestInfo(pRequestInfo requestInfo)
+{
+   std::string command;
+   command += (requestInfo->roomId + ":");
+   command += "allRequests:";
+   command += std::to_string(maxRequestNum+1);
+   command += " ";
+
+   command += ("start_time "+requestInfo->start_time+" ");
+   command += ("end_time "+ requestInfo->end_time+" ");
+   command += ("start_temperature "+std::to_string(requestInfo->start_temperature)+" ");
+   command += ("end_temperature "+std::to_string(requestInfo->end_temperature)+" ");
+   command += ("velocity "+requestInfo->velocity);
+   command += ("fee "+ requestInfo->fee);
+
+   // add error handle
+   redisReply reply = redisCommand(connector,command.c_str());
+
 }
 
