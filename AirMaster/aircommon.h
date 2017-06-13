@@ -20,6 +20,7 @@ typedef struct RequestInfo{
     {
 
     }
+    RequestInfo(){};
 }RequestInfo,*pRequestInfo;
 
 

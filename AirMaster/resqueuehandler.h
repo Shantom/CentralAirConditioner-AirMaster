@@ -7,7 +7,9 @@
 #include <map>
 #include <list>
 #include "tcppipetoservant.h"
+#include "aireportsystem.h"
 #include "packethandler.h"
+#include "aircommon.h"
 
 
 typedef struct ServantStatus{
@@ -48,6 +50,16 @@ signals:
 public slots:
     void monitoringServant();
 private:
+    // generate a timestamp
+     std::string currentTimeStamp();
+
+     // update RequestInfo in AiReportSystem when stop wind
+     void updateRequestInfoStop(TcpPipeToServant* servant);
+
+     // add new RequestInfo in AiReportSystem when start wind
+     void addRequestInfoStart(TcpPipeToServant* servant);
+
+    AiReportSystem * airReportor;
     // all clients
     std::vector<TcpPipeToServant*> allClients;
 
