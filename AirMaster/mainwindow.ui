@@ -186,17 +186,17 @@
       </column>
       <column>
        <property name="text">
-        <string>IP</string>
+        <string>Temperature</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Port</string>
+        <string>Working</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>State</string>
+        <string>Velocity</string>
        </property>
       </column>
       <column>

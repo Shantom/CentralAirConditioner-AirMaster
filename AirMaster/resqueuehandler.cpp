@@ -88,7 +88,8 @@ void ResQueueHandler::monitoringServant()
                     servantIsFirstTemp[cl] =true;
                 }
                 else{
-                    allServantsStatus[cl]->currentTemperature = reinterpret_cast<TemperatureClient*>(rece)->temp;
+                    allServantsStatus[cl]->currentTemperature =
+                            reinterpret_cast<TemperatureClient*>(rece)->temp;
                 }
                 qDebug()<<" get a temperature:    "<<rece->toJsonStr().c_str();
             }
@@ -146,10 +147,13 @@ void ResQueueHandler::updateRequestInfoStop(TcpPipeToServant *cl)
 
     // update last uncomplete RequestInfo
     pRequestInfo lastRequestInfo = airReportor->getRoomRequestInfo(roomId);
-    lastRequestInfo->complete = true;
-    lastRequestInfo->end_temperature = allServantsStatus[cl]->currentTemperature;
-    lastRequestInfo->end_time = currentTimeStamp();
-    airReportor->updateRequestComplete(lastRequestInfo);
+    if(lastRequestInfo)
+    {
+        lastRequestInfo->complete = true;
+        lastRequestInfo->end_temperature = allServantsStatus[cl]->currentTemperature;
+        lastRequestInfo->end_time = currentTimeStamp();
+        airReportor->updateRequestComplete(lastRequestInfo);
+    }
 }
 
 void ResQueueHandler::addRequestInfoStart(TcpPipeToServant* cl)

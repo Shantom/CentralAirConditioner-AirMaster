@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <airconditionmaster.h>
 #include<requeuehelper.h>
+#include <QTimer>
 namespace Ui {
 class MainWindow;
 }
@@ -28,6 +29,8 @@ private slots:
 
     void on_pushButton_set_clicked();
 
+    void refreshTable();
+
 private:
     Ui::MainWindow *ui;
 
@@ -38,6 +41,8 @@ private:
 
     int upperBound=23;
     int lowerBound=14;
+
+    QTimer timer;
 
 };
 
