@@ -48,3 +48,10 @@ std::string PacketHandler::constructSendWind(std::string velocity)
    qDebug()<<">>"<<ss.toJsonStr().c_str();
    return ss.toJsonStr();
 }
+
+std::string PacketHandler::constructSendFee(float fee, float kwh)
+{
+    CountFeeServer cs = CountFeeServer(kwh,fee);
+    qDebug()<<">>"<<cs.toJsonStr().c_str();
+    return cs.toJsonStr();
+}

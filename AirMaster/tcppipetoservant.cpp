@@ -33,6 +33,12 @@ void TcpPipeToServant::sendWind(std::string wind_velocity)
     clientTcp->write(sendStr.c_str());
 }
 
+void TcpPipeToServant::sendFee(float fee, float kwh)
+{
+    std::string sendStr = packetHandler->constructSendFee(fee,kwh);
+    clientTcp->write(sendStr.c_str());
+}
+
 void TcpPipeToServant::setClientTcp(QTcpSocket *value)
 {
     clientTcp = value;

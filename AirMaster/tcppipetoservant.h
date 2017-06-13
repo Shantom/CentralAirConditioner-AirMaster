@@ -18,10 +18,14 @@ public:
     explicit TcpPipeToServant(QObject *parent = nullptr,QTcpSocket* _clientTcp=nullptr);
 
     ~TcpPipeToServant();
-//    void sendReplyPacket();
+
+    // send reply packet
     void sendFreshPeriod();
     void sendWorkingState();
     void sendWind(std::string wind_velocity);
+    void sendFee(float fee, float kwh);
+
+
     void setClientTcp(QTcpSocket *value);
 //  void examinePackHandler();
 

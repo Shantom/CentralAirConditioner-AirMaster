@@ -4,9 +4,20 @@ ResQueueHandler::ResQueueHandler(QObject *parent, PacketHandler *packHandler)
     : QObject(parent),packetHandler(packHandler),workingCounter(0)
 {
 
+    airReportor = new AiReportSystem();
+    airFeer = new AirFee();
+
+
+    // monitor servants and handle requests
     monitorServTimer.setInterval(30);
     monitorServTimer.start();
     connect(&monitorServTimer,SIGNAL(timeout()),this,SLOT(monitoringServant()));
+
+    // count fee and send fee packet
+    countFeeTimer.setInterval(300);
+    countFeeTimer.start();
+    connect(&countFeeTimer,SIGNAL(timeout()),this,SLOT(countingFee()));
+
 }
 
 ResQueueHandler::~ResQueueHandler()
@@ -23,6 +34,8 @@ void ResQueueHandler::handlWindRequests()
                 if (workingCounter < limitWorkingNum){
                     std::string velo = reinterpret_cast<StartWindClient*>(allRequests[cl].front())->velocity;
                     cl->sendWind(velo.c_str());
+                    allServantsStatus[cl]->velocity = velo;
+
 
                     // report system and count fee
                     if (allServantsStatus[cl]->working){
@@ -36,7 +49,7 @@ void ResQueueHandler::handlWindRequests()
                         workingCounter++;
                         allServantsStatus[cl]->working = true;
                     }
-                    allServantsStatus[cl]->velocity = velo;
+
                     allRequests[cl].pop_front();
                 }
             }
@@ -97,6 +110,27 @@ void ResQueueHandler::monitoringServant()
     handlWindRequests();
 }
 
+void ResQueueHandler::countingFee()
+{
+    float kwhCounter = 0.5;
+    for (auto& cl:allClients){
+        if(allServantsStatus[cl]->onLine){
+            if (allServantsStatus[cl]->velocity == "HIGH"){
+                kwhCounter *=3;
+            }
+            else if(allServantsStatus[cl]->velocity == "LOW"){
+                kwhCounter *=1;
+            }
+            else{
+                kwhCounter *=2;
+            }
+            float feeTemp = airFeer->getFeeUnit()*kwhCounter;
+            airFeer->updateFeePower(allServantsStatus[cl]->room,feeTemp,kwhCounter);
+            cl->sendFee(feeTemp,kwhCounter);
+        }
+    }
+}
+
 std::string ResQueueHandler::currentTimeStamp()
 {
     std::time_t now = std::time(nullptr);
@@ -118,7 +152,7 @@ void ResQueueHandler::updateRequestInfoStop(TcpPipeToServant *cl)
     airReportor->updateRequestComplete(lastRequestInfo);
 }
 
-void ResQueueHandler::addRequestInfoStart(TcpPipeToServant* servant)
+void ResQueueHandler::addRequestInfoStart(TcpPipeToServant* cl)
 {
 
     // generate a new uncomplete RequestInfo
@@ -127,7 +161,7 @@ void ResQueueHandler::addRequestInfoStart(TcpPipeToServant* servant)
     newInfo->roomId = allServantsStatus[cl]->room ;
     newInfo->start_temperature = allServantsStatus[cl]->currentTemperature;
     newInfo->start_time = currentTimeStamp();
-    newInfo->velocity = velo;
+    newInfo->velocity = allServantsStatus[cl]->velocity;
 
     airReportor->addNewRequestInfo(newInfo);
 

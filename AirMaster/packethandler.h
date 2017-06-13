@@ -13,6 +13,7 @@ public:
    // std::string handlePacketStr(std::string& str);
     std::string constructSendPack(std::string packetType);
     std::string constructSendWind(std::string velocity);
+    std::string constructSendFee(float fee, float kwh);
 private:
     AirConditionMaster &airMaster;
     // FeeCounter

@@ -10,6 +10,7 @@
 #include "aireportsystem.h"
 #include "packethandler.h"
 #include "aircommon.h"
+#include "airfee.h"
 
 
 typedef struct ServantStatus{
@@ -49,6 +50,7 @@ signals:
 
 public slots:
     void monitoringServant();
+    void countingFee();
 private:
     // generate a timestamp
      std::string currentTimeStamp();
@@ -60,6 +62,8 @@ private:
      void addRequestInfoStart(TcpPipeToServant* servant);
 
     AiReportSystem * airReportor;
+    AirFee * airFeer;
+
     // all clients
     std::vector<TcpPipeToServant*> allClients;
 
@@ -75,6 +79,7 @@ private:
     PacketHandler* packetHandler;
     std::thread monitorPacket;
     QTimer monitorServTimer;
+    QTimer countFeeTimer;
 };
 
 #endif // RESQUEUEHANDLER_H
