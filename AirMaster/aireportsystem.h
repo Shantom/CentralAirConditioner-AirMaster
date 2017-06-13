@@ -30,9 +30,6 @@ public:
 
 private:
 
-
-
-
     // cached uncomplete RequestInfo
      std::map<std::string, pRequestInfo> allCachedRequests;
 
