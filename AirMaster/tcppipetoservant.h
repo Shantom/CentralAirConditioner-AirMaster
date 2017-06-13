@@ -48,7 +48,7 @@ private:
     std::string port;
 
     std::queue<AirPacket*> requestCache;
-    int requestCacheCounter;
+    int requestCacheCounter=0;
 
 };
 

@@ -56,7 +56,7 @@ void ResQueueHandler::handlWindRequests()
 void ResQueueHandler::monitoringServant()
 { 
     //collect packet which need handling
-    for(auto &cl:allClients)
+    for(TcpPipeToServant* &cl:allClients)
     {
         if(cl->getRequestCacheCounter()>0){
             AirPacket* rece = cl->popRequestCache();
