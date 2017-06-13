@@ -41,10 +41,10 @@ void AirDatabase::addRequestInfo(pRequestInfo requestInfo)
    command += ("start_temperature "+std::to_string(requestInfo->start_temperature)+" ");
    command += ("end_temperature "+std::to_string(requestInfo->end_temperature)+" ");
    command += ("velocity "+requestInfo->velocity);
-   command += ("fee "+ requestInfo->fee);
+   command += ("fee "+ std::to_string(requestInfo->fee));
 
    // add error handle
-   redisReply reply = redisCommand(connector,command.c_str());
+    redisCommand(connector,command.c_str());
 
 }
 

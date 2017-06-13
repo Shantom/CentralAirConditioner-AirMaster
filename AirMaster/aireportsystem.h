@@ -9,6 +9,7 @@
 #include <ctime>
 #include <sstream>
 #include <aircommon.h>
+#include "airdatabase.h"
 
 
 class AiReportSystem
@@ -29,12 +30,13 @@ public:
     void updateRequestComplete(pRequestInfo completeRequestInfo);
 
 private:
-
     // cached uncomplete RequestInfo
      std::map<std::string, pRequestInfo> allCachedRequests;
 
     // key is roomId, value is its ReqeustInfos
     std::map<std::string, std::vector<pRequestInfo>> allCompleteRequests;
+
+    AirDatabase *airDatabase;
 };
 
 #endif // AIREPORTSYSTEM_H

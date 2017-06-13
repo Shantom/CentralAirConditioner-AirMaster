@@ -8,11 +8,14 @@ class AirDatabase
 {
 public:
     AirDatabase();
+    ~AirDatabase();
     bool connectDatabase(std::string address,int port);
+    void addRequestInfo(pRequestInfo requestInfo);
     void setSwitchTimes(int switch_times);
 
 private:
     redisContext *connector;
+    unsigned int maxRequestNum;
 
 };
 
