@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     //AirDatabase data;
     //data.connectDatabase("127.0.0.1",6379);
     MainWindow w;
-    w.show();
+//    w.show();
 
     return a.exec();
 }

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <vector>
 #include <map>
 #include <aircommon.h>
 
@@ -23,7 +24,7 @@ private:
     std::list<pRequestInfo> allCachedRequests;
 
     // key is roomId, value is its ReqeustInfos
-    std::map<std::string, vector<pRequestInfo>> allCompleteRequests;
+    std::map<std::string, std::vector<pRequestInfo>> allCompleteRequests;
 };
 
 #endif // AIREPORTSYSTEM_H
