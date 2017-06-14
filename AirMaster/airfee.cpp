@@ -1,6 +1,6 @@
 #include "airfee.h"
 
-AirFee::AirFee():feeUnit(2.5)
+AirFee::AirFee():feeUnit(5)
 {
 
 }

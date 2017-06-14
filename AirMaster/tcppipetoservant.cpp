@@ -1,12 +1,13 @@
 #include "tcppipetoservant.h"
 
 TcpPipeToServant::TcpPipeToServant(QObject *parent, QTcpSocket *_clientTcp)
-    : QObject(parent),clientTcp(_clientTcp),receiveStr("")
+    : QObject(parent),clientTcp(_clientTcp),receiveStr(""),isDead(false)
 {
     ip=clientTcp->peerAddress().toString().toStdString();
     port=clientTcp->peerPort();
     //    firstTemperature=true;
-    connect(clientTcp,SIGNAL(readyRead()),this,SLOT(readPacket()));
+    connect(clientTcp,&QIODevice::readyRead,this,&TcpPipeToServant::readPacket);
+    connect(clientTcp,&QTcpSocket::disconnected,this,&TcpPipeToServant::destroySelf);
 }
 
 TcpPipeToServant::~TcpPipeToServant()
@@ -84,6 +85,11 @@ void TcpPipeToServant::readPacket()
 
 }
 
+void TcpPipeToServant::destroySelf()
+{
+    isDead = true;
+}
+
 std::vector<std::string> TcpPipeToServant::parseJsonStr(std::string &originStr)
 {
     std::vector<std::string> allJsons;
@@ -113,6 +119,11 @@ std::string TcpPipeToServant::parseOneJson(std::string &originStr)
         flag++;
     }
     return "";
+}
+
+bool TcpPipeToServant::getIsDead() const
+{
+    return isDead;
 }
 
 int TcpPipeToServant::getRequestCacheCounter() const

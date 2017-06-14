@@ -62,3 +62,6 @@ HEADERS += \
 FORMS += \
         mainwindow.ui \
     logindialog.ui
+
+DISTFILES += \
+    database_design.org

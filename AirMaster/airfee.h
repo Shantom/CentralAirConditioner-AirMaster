@@ -7,7 +7,7 @@
 typedef struct FeePower{
     float fee;
     float KWH;
-    FeePower(float _fee,float _kwh):fee(_fee),KWH(_kwh){};
+    FeePower(float _fee,float _kwh):fee(_fee),KWH(_kwh){}
 }FeePower,*pFeePower;
 
 class AirFee

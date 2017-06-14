@@ -24,7 +24,9 @@ pRequestInfo AiReportSystem::getRoomRequestInfo(std::string roomId)
 
 void AiReportSystem::updateRequestComplete(pRequestInfo completeRequestInfo)
 {
-   allCachedRequests[completeRequestInfo->roomId]=nullptr;
-   allCompleteRequests[completeRequestInfo->roomId].push_back(completeRequestInfo);
+    allCachedRequests[completeRequestInfo->roomId]=nullptr;
+    allCompleteRequests[completeRequestInfo->roomId].push_back(completeRequestInfo);
+
+    airDatabase->addRequestInfo(completeRequestInfo);
 
 }

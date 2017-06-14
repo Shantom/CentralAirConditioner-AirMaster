@@ -61,6 +61,7 @@ void ResQueueHandler::handlWindRequests()
                     workingCounter--;
                     allServantsStatus[cl]->working = false;
                 }
+                allServantsStatus[cl]->velocity="none";
 
                 allRequests[cl].pop_front();
             }
@@ -76,6 +77,7 @@ void ResQueueHandler::handlWindRequests()
 
 void ResQueueHandler::monitoringServant()
 { 
+    checkServants();
     //collect packet which need handling
     for(TcpPipeToServant* &cl:allClients)
     {
@@ -113,30 +115,56 @@ void ResQueueHandler::monitoringServant()
 
 void ResQueueHandler::countingFee()
 {
-    float kwhCounter = 0.5;
+    float kwhCounter = 1;
     for (auto& cl:allClients){
-        if(allServantsStatus[cl]->onLine){
-            if (allServantsStatus[cl]->velocity == "HIGH"){
-                kwhCounter *=3;
+        if(allServantsStatus[cl]->working){
+            if (allServantsStatus[cl]->velocity == "high"){
+                kwhCounter *=1.3;
             }
-            else if(allServantsStatus[cl]->velocity == "LOW"){
-                kwhCounter *=1;
+            else if(allServantsStatus[cl]->velocity == "low"){
+                kwhCounter *=.8;
             }
             else{
-                kwhCounter *=2;
+                kwhCounter *=1;
             }
             float feeTemp = airFeer->getFeeUnit()*kwhCounter;
             airFeer->updateFeePower(allServantsStatus[cl]->room,feeTemp,kwhCounter);
-            cl->sendFee(feeTemp,kwhCounter);
+            cl->sendFee(airFeer->getRoomFee(allServantsStatus[cl]->room)->fee,
+                        airFeer->getRoomFee(allServantsStatus[cl]->room)->KWH);
+            pRequestInfo currentRequest= airReportor->getRoomRequestInfo(
+                        allServantsStatus[cl]->room);
+            currentRequest->fee += feeTemp;
+        }
+        kwhCounter = 0.5;
+    }
+}
+
+void ResQueueHandler::checkServants()
+{
+    for(auto cl:allClients){
+        if (cl->getIsDead()){
+            allServantsStatus.erase(cl);
+
+            servantIsFirstTemp.erase(cl);
+
+            std::list<AirPacket*>& packetList = allRequests[cl];
+            for(auto &a:packetList){
+                delete a;
+            }
+            allRequests.erase(cl);
         }
     }
+
+    allClients.erase(std::remove_if(allClients.begin(),allClients.end(),
+                   [](TcpPipeToServant* servant)->bool{return servant->getIsDead();}),
+            allClients.end());
 }
 
 std::string ResQueueHandler::currentTimeStamp()
 {
     std::time_t now = std::time(nullptr);
     std::ostringstream oss;
-    oss << std::put_time(std::localtime(&now), "%d-%m-%Y %H-%M-%S");
+    oss << std::put_time(std::localtime(&now), "%Y-%m-%d--%H-%M-%S");
     std::string nowTime = oss.str();
     return nowTime;
 }
@@ -152,6 +180,7 @@ void ResQueueHandler::updateRequestInfoStop(TcpPipeToServant *cl)
         lastRequestInfo->complete = true;
         lastRequestInfo->end_temperature = allServantsStatus[cl]->currentTemperature;
         lastRequestInfo->end_time = currentTimeStamp();
+        //lastRequestInfo->fee = airFeer->getRoomFee(allServantsStatus[cl]->room)->fee;
         airReportor->updateRequestComplete(lastRequestInfo);
     }
 }
@@ -166,6 +195,7 @@ void ResQueueHandler::addRequestInfoStart(TcpPipeToServant* cl)
     newInfo->start_temperature = allServantsStatus[cl]->currentTemperature;
     newInfo->start_time = currentTimeStamp();
     newInfo->velocity = allServantsStatus[cl]->velocity;
+    newInfo->fee = 0;
 
     airReportor->addNewRequestInfo(newInfo);
 

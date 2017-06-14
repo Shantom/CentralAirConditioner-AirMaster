@@ -130,33 +130,28 @@ void MainWindow::refreshTable()
         QString RoomID=servant->room.c_str();
         addItemToRow(nOldRowCount,0,RoomID);
 
-//        QTableWidgetItem *IRoomID = new QTableWidgetItem(RoomID);
-//        ui->tableWidget->setItem(nOldRowCount, 0, IRoomID);
-//        IRoomID->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-
-        QString Temperature=QString::number(servant->currentTemperature);
+        int temp=servant->currentTemperature;
+        QString Temperature="N/A";
+        if(temp!=-999)
+            Temperature=QString::number(temp);
         addItemToRow(nOldRowCount,1,Temperature);
 
-//        QTableWidgetItem *ITemperature = new QTableWidgetItem(Temperature);
-//        ui->tableWidget->setItem(nOldRowCount, 1, ITemperature);
-//        ITemperature->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-
         QString Working=servant->working?"Yes":"No";
-         addItemToRow(nOldRowCount,2,Working);
-
-//        QTableWidgetItem *IWorking = new QTableWidgetItem(Working);
-//        ui->tableWidget->setItem(nOldRowCount, 2, IWorking);
-//        IWorking->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        addItemToRow(nOldRowCount,2,Working);
 
         QString Velocity=servant->velocity.c_str();
-         addItemToRow(nOldRowCount,3, Velocity);
-//        QTableWidgetItem *IVelocity = new QTableWidgetItem(Velocity);
-//        ui->tableWidget->setItem(nOldRowCount, 3, IVelocity);
-//        IVelocity->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-        QString fee = QString::number(allFee->getRoomFee(servant->room)->fee);
-        addItemToRow(nOldRowCount,4,fee);
+        addItemToRow(nOldRowCount,3, Velocity);
 
-        QString kwh = QString::number(allFee->getRoomFee(servant->room)->KWH);
+
+        auto pRoom=allFee->getRoomFee(servant->room);
+        QString fee="0";
+        QString kwh="0";
+        if(pRoom)
+        {
+            fee = QString::number(pRoom->fee);
+            kwh = QString::number(pRoom->KWH);
+        }
+        addItemToRow(nOldRowCount,4,fee);
         addItemToRow(nOldRowCount,5,kwh);
 
 

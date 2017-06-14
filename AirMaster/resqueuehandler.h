@@ -6,6 +6,7 @@
 #include <QObject>
 #include <map>
 #include <list>
+#include <algorithm>
 #include "tcppipetoservant.h"
 #include "aireportsystem.h"
 #include "packethandler.h"
@@ -55,6 +56,8 @@ public slots:
     void monitoringServant();
     void countingFee();
 private:
+    // remove dead TcpPipeToServants
+    void checkServants();
     // generate a timestamp
      std::string currentTimeStamp();
 
@@ -70,7 +73,7 @@ private:
     // all clients
     std::vector<TcpPipeToServant*> allClients;
 
-    std::list<TcpPipeToServant*> allHandling;
+//    std::list<TcpPipeToServant*> allHandling;
 
     std::map<TcpPipeToServant*, pServantStatus> allServantsStatus;
     std::map<TcpPipeToServant*, bool> servantIsFirstTemp;

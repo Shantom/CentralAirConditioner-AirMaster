@@ -36,10 +36,13 @@ public:
 
     int getRequestCacheCounter() const;
 
+    bool getIsDead() const;
+
 signals:
 
 public slots:
     void readPacket();
+    void destroySelf();
 private:
 
     std::vector<std::string> parseJsonStr(std::string & originStr);
@@ -53,6 +56,8 @@ private:
 
     std::queue<AirPacket*> requestCache;
     int requestCacheCounter=0;
+
+    bool isDead;
 
 };
 
