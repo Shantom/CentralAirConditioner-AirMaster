@@ -13,10 +13,10 @@ public:
     void addRequestInfo(pRequestInfo requestInfo);
     void setSwitchTimes(int switch_times);
 
+    void initAllRequests(std::map<std::string, std::vector<pRequestInfo>>& allCompleteRequests);
 private:
     redisContext *connector;
-    unsigned int maxRequestNum;
-
+    std::map<std::string, int> allRequestNums;
 };
 
 #endif // AIRDATABASE_H
