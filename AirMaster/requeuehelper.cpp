@@ -24,6 +24,16 @@ void ReQueueHelper::startReceive()
 
 }
 
+void ReQueueHelper::sendFreshPeroid()
+{
+    resQueueHandler->sendFreshperoid();
+}
+
+void ReQueueHelper::sendWorkingState()
+{
+
+}
+
 void ReQueueHelper::acceptConnection()
 {
     QTcpSocket *clientConnection=receiveServer->nextPendingConnection();
@@ -43,6 +53,11 @@ void ReQueueHelper::acceptConnection()
 void ReQueueHelper::receiveRequest()
 {
 
+}
+
+ResQueueHandler *ReQueueHelper::getResQueueHandler() const
+{
+    return resQueueHandler;
 }
 
 void ReQueueHelper::setResQueueHandler(ResQueueHandler *value)

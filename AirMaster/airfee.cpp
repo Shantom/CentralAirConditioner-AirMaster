@@ -14,6 +14,11 @@ void AirFee::updateFeePower(std::string &roomId, float addFee, float addKWH)
     allFee[roomId]->KWH+= addKWH;
 }
 
+pFeePower AirFee::getRoomFee(std::string roomId)
+{
+    return allFee[roomId];
+}
+
 float AirFee::getFeeUnit() const
 {
     return feeUnit;

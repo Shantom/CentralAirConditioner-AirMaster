@@ -15,6 +15,7 @@ class AirFee
 public:
     AirFee();
     void updateFeePower(std::string& roomId, float addFee, float addKWH);
+    pFeePower getRoomFee(std::string roomId);
     float getFeeUnit() const;
 
     void setFeeUnit(float value);

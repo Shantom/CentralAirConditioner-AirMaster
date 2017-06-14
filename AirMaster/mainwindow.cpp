@@ -90,7 +90,12 @@ void MainWindow::on_pushButton_set_clicked()
     airMaster->setDefaTemperature(windTemp);
 
     //A Certain Package should be sent here*
+<<<<<<< HEAD
     resQueueHelper->sendMasterInfo();
+=======
+    resQueueHelper->sendFreshPeroid();
+
+>>>>>>> f1a59d49fdb71c029464e1c19943add89b85b94e
 }
 
 void MainWindow::refreshTable()
@@ -111,6 +116,7 @@ void MainWindow::refreshTable()
     ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
 
+    AirFee* allFee = resQueueHelper->getResQueueHandler()->getAirFeer();
     int rowCount=ui->tableWidget->rowCount();
     for(int i=0;i<rowCount;i++)
     {
@@ -126,24 +132,37 @@ void MainWindow::refreshTable()
         ui->tableWidget->insertRow(nOldRowCount);
 
         QString RoomID=servant->room.c_str();
-        QTableWidgetItem *IRoomID = new QTableWidgetItem(RoomID);
-        ui->tableWidget->setItem(nOldRowCount, 0, IRoomID);
-        IRoomID->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        addItemToRow(nOldRowCount,0,RoomID);
+
+//        QTableWidgetItem *IRoomID = new QTableWidgetItem(RoomID);
+//        ui->tableWidget->setItem(nOldRowCount, 0, IRoomID);
+//        IRoomID->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
 
         QString Temperature=QString::number(servant->currentTemperature);
-        QTableWidgetItem *ITemperature = new QTableWidgetItem(Temperature);
-        ui->tableWidget->setItem(nOldRowCount, 1, ITemperature);
-        ITemperature->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        addItemToRow(nOldRowCount,1,Temperature);
+
+//        QTableWidgetItem *ITemperature = new QTableWidgetItem(Temperature);
+//        ui->tableWidget->setItem(nOldRowCount, 1, ITemperature);
+//        ITemperature->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
 
         QString Working=servant->working?"Yes":"No";
-        QTableWidgetItem *IWorking = new QTableWidgetItem(Working);
-        ui->tableWidget->setItem(nOldRowCount, 2, IWorking);
-        IWorking->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+         addItemToRow(nOldRowCount,2,Working);
+
+//        QTableWidgetItem *IWorking = new QTableWidgetItem(Working);
+//        ui->tableWidget->setItem(nOldRowCount, 2, IWorking);
+//        IWorking->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
 
         QString Velocity=servant->velocity.c_str();
-        QTableWidgetItem *IVelocity = new QTableWidgetItem(Velocity);
-        ui->tableWidget->setItem(nOldRowCount, 3, IVelocity);
-        IVelocity->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+         addItemToRow(nOldRowCount,3, Velocity);
+//        QTableWidgetItem *IVelocity = new QTableWidgetItem(Velocity);
+//        ui->tableWidget->setItem(nOldRowCount, 3, IVelocity);
+//        IVelocity->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        QString fee = QString::number(allFee->getRoomFee(servant->room)->fee);
+        addItemToRow(nOldRowCount,4,fee);
+
+        QString kwh = QString::number(allFee->getRoomFee(servant->room)->KWH);
+        addItemToRow(nOldRowCount,5,kwh);
+
 
     }
     ui->tableWidget->setSortingEnabled(true);
@@ -154,4 +173,11 @@ void MainWindow::refreshTable()
     {
         ui->tableWidget->setCurrentItem(oldItems[0]);
     }
+}
+
+void MainWindow::addItemToRow(int nOldRow, int numth, QString item)
+{
+    QTableWidgetItem *itemWidget= new QTableWidgetItem(item);
+    ui->tableWidget->setItem(nOldRow, numth, itemWidget);
+    itemWidget->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
 }

@@ -43,9 +43,15 @@ public:
 //    void initQueueHandler();
     void addTcpServant(TcpPipeToServant* servant);
     void sendFreshperoid();
+<<<<<<< HEAD
     void sendMode();
+=======
+    void sendWorkingState();
+>>>>>>> f1a59d49fdb71c029464e1c19943add89b85b94e
     PacketHandler *getPacketHandler() const;
     std::map<TcpPipeToServant*, pServantStatus> getAllServantsStatus() const{return allServantsStatus;}
+
+    AirFee *getAirFeer() const;
 
 signals:
 

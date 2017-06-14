@@ -32,6 +32,7 @@ private slots:
     void refreshTable();
 
 private:
+    void addItemToRow(int nOldRow, int numth, QString item);
     Ui::MainWindow *ui;
 
     // include Master's info, you can change it at main UI
