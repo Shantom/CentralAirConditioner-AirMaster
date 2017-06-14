@@ -81,6 +81,7 @@ void MainWindow::on_pushButton_set_clicked()
 {
     int rate=ui->spinBox_period->value();
     airMaster->setFreshperiod(rate);
+
     if(ui->pushButton_cool->isEnabled())
         airMaster->setCurrentModeStr("HOT");
     else
@@ -89,7 +90,7 @@ void MainWindow::on_pushButton_set_clicked()
     airMaster->setDefaTemperature(windTemp);
 
     //A Certain Package should be sent here*
-
+    resQueueHelper->sendMasterInfo();
 }
 
 void MainWindow::refreshTable()

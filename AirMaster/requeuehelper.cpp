@@ -49,3 +49,10 @@ void ReQueueHelper::setResQueueHandler(ResQueueHandler *value)
 {
     resQueueHandler = value;
 }
+
+void ReQueueHelper::sendMasterInfo()
+{
+    resQueueHandler->sendFreshperoid();
+    resQueueHandler->sendMode();
+
+}

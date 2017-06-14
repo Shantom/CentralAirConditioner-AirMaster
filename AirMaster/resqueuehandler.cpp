@@ -198,4 +198,13 @@ void ResQueueHandler::sendFreshperoid()
     }
 }
 
+void ResQueueHandler::sendMode()
+{
+    for(auto cl:allClients)
+    {
+        cl->sendWorkingState();
+    }
+
+}
+
 //int ResQueueHandler::fakeTemperature = -999;

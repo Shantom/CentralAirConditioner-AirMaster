@@ -43,6 +43,7 @@ public:
 //    void initQueueHandler();
     void addTcpServant(TcpPipeToServant* servant);
     void sendFreshperoid();
+    void sendMode();
     PacketHandler *getPacketHandler() const;
     std::map<TcpPipeToServant*, pServantStatus> getAllServantsStatus() const{return allServantsStatus;}
 
