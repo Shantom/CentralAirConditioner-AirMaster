@@ -21,7 +21,6 @@ public:
     void setResQueueHandler(ResQueueHandler *value);
     std::map<TcpPipeToServant*, pServantStatus> getAllServantsStatus() const
     {return resQueueHandler->getAllServantsStatus();}
-    void sendMasterInfo();
 
     ResQueueHandler *getResQueueHandler() const;
 

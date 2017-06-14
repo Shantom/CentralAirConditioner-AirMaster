@@ -31,7 +31,7 @@ void ReQueueHelper::sendFreshPeroid()
 
 void ReQueueHelper::sendWorkingState()
 {
-
+    resQueueHandler->sendWorkingState();
 }
 
 void ReQueueHelper::acceptConnection()
@@ -65,9 +65,3 @@ void ReQueueHelper::setResQueueHandler(ResQueueHandler *value)
     resQueueHandler = value;
 }
 
-void ReQueueHelper::sendMasterInfo()
-{
-    resQueueHandler->sendFreshperoid();
-    resQueueHandler->sendMode();
-
-}

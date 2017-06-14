@@ -90,12 +90,8 @@ void MainWindow::on_pushButton_set_clicked()
     airMaster->setDefaTemperature(windTemp);
 
     //A Certain Package should be sent here*
-<<<<<<< HEAD
-    resQueueHelper->sendMasterInfo();
-=======
+    resQueueHelper->sendWorkingState();
     resQueueHelper->sendFreshPeroid();
-
->>>>>>> f1a59d49fdb71c029464e1c19943add89b85b94e
 }
 
 void MainWindow::refreshTable()
