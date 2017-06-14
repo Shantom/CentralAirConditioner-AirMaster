@@ -40,7 +40,8 @@ SOURCES += \
     airdatabase.cpp \
     aireportsystem.cpp \
     airfee.cpp \
-    logindialog.cpp
+    logindialog.cpp \
+    reportwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -57,11 +58,13 @@ HEADERS += \
     airdatabase.h \
     aireportsystem.h \
     airfee.h \
-    logindialog.h
+    logindialog.h \
+    reportwidget.h
 
 FORMS += \
         mainwindow.ui \
-    logindialog.ui
+    logindialog.ui \
+    reportwidget.ui
 
 DISTFILES += \
     database_design.org

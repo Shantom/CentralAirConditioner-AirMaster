@@ -50,6 +50,9 @@ public:
 
     AirFee *getAirFeer() const;
 
+    AiReportSystem * getAirReportor()const{return airReportor;}
+
+
 signals:
 
 public slots:

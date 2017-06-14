@@ -5,6 +5,7 @@
 #include <airconditionmaster.h>
 #include<requeuehelper.h>
 #include <QTimer>
+#include "reportwidget.h"
 namespace Ui {
 class MainWindow;
 }
@@ -31,6 +32,8 @@ private slots:
 
     void refreshTable();
 
+    void on_tableWidget_doubleClicked(const QModelIndex &index);
+
 private:
     void addItemToRow(int nOldRow, int numth, QString item);
     Ui::MainWindow *ui;
@@ -44,6 +47,8 @@ private:
     int lowerBound=14;
 
     QTimer timer;
+
+    ReportWidget rw;
 
 };
 

@@ -29,9 +29,12 @@ public:
     // request stop, update and fill a complete requestinfo
     void updateRequestComplete(pRequestInfo completeRequestInfo);
 
+    std::map<std::string, std::vector<pRequestInfo>>* getAllCompleteRequests()
+    {return &allCompleteRequests;}
+
 private:
     // cached uncomplete RequestInfo
-     std::map<std::string, pRequestInfo> allCachedRequests;
+    std::map<std::string, pRequestInfo> allCachedRequests;
 
     // key is roomId, value is its ReqeustInfos
     std::map<std::string, std::vector<pRequestInfo>> allCompleteRequests;

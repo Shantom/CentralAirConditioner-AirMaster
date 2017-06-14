@@ -172,3 +172,13 @@ void MainWindow::addItemToRow(int nOldRow, int numth, QString item)
     ui->tableWidget->setItem(nOldRow, numth, itemWidget);
     itemWidget->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
 }
+
+void MainWindow::on_tableWidget_doubleClicked(const QModelIndex &index)
+{
+    int row = index.row();
+    QString RoomID=ui->tableWidget->item(row,0)->text();
+    AiReportSystem* reportSys=resQueueHelper->getResQueueHandler()->getAirReportor();
+    auto resquests=reportSys->getAllCompleteRequests();
+    rw.setRoom(RoomID,resquests);
+    rw.show();
+}
