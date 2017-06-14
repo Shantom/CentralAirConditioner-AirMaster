@@ -43,8 +43,11 @@ public:
 //    void initQueueHandler();
     void addTcpServant(TcpPipeToServant* servant);
     void sendFreshperoid();
+    void sendWorkingState();
     PacketHandler *getPacketHandler() const;
     std::map<TcpPipeToServant*, pServantStatus> getAllServantsStatus() const{return allServantsStatus;}
+
+    AirFee *getAirFeer() const;
 
 signals:
 

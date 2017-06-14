@@ -14,7 +14,7 @@ ResQueueHandler::ResQueueHandler(QObject *parent, PacketHandler *packHandler)
     connect(&monitorServTimer,SIGNAL(timeout()),this,SLOT(monitoringServant()));
 
     // count fee and send fee packet
-    countFeeTimer.setInterval(300);
+    countFeeTimer.setInterval(3000);
     countFeeTimer.start();
     connect(&countFeeTimer,SIGNAL(timeout()),this,SLOT(countingFee()));
 
@@ -171,6 +171,11 @@ void ResQueueHandler::addRequestInfoStart(TcpPipeToServant* cl)
 
 }
 
+AirFee *ResQueueHandler::getAirFeer() const
+{
+    return airFeer;
+}
+
 PacketHandler *ResQueueHandler::getPacketHandler() const
 {
     return packetHandler;
@@ -195,6 +200,15 @@ void ResQueueHandler::sendFreshperoid()
     for(auto &cl:allClients)
     {
         cl->sendFreshPeriod();
+    }
+}
+
+void ResQueueHandler::sendWorkingState()
+{
+    for(auto &cl:allClients)
+    {
+        if (allServantsStatus[cl]->onLine)
+            cl->sendWorkingState();
     }
 }
 
