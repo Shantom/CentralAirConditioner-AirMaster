@@ -38,6 +38,7 @@ void MainWindow::on_pushButton_up_clicked()
         ui->pushButton_up->setEnabled(false);
     else
         ui->pushButton_up->setEnabled(true);
+    ui->pushButton_down->setEnabled(true);
 }
 
 void MainWindow::on_pushButton_down_clicked()
@@ -49,6 +50,7 @@ void MainWindow::on_pushButton_down_clicked()
         ui->pushButton_down->setEnabled(false);
     else
         ui->pushButton_down->setEnabled(true);
+    ui->pushButton_up->setEnabled(true);
 }
 
 void MainWindow::on_pushButton_cool_clicked()

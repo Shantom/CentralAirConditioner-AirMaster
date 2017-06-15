@@ -147,6 +147,10 @@ void ResQueueHandler::checkServants()
 {
     for(auto cl:allClients){
         if (cl->getIsDead()){
+            if(allServantsStatus[cl]->working)
+            {//manage workingCounter
+                workingCounter--;
+            }
             allServantsStatus.erase(cl);
 
             servantIsFirstTemp.erase(cl);

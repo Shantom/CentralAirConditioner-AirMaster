@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>651</width>
+    <width>715</width>
     <height>507</height>
    </rect>
   </property>
@@ -83,7 +83,7 @@
       <widget class="QDateEdit" name="dateEdit">
        <property name="dateTime">
         <datetime>
-         <hour>12</hour>
+         <hour>0</hour>
          <minute>0</minute>
          <second>0</second>
          <year>2017</year>
@@ -93,7 +93,7 @@
        </property>
        <property name="time">
         <time>
-         <hour>12</hour>
+         <hour>0</hour>
          <minute>0</minute>
          <second>0</second>
         </time>
@@ -134,6 +134,20 @@
          <month>6</month>
          <day>15</day>
         </date>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Fee:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_fee">
+       <property name="text">
+        <string>N/A</string>
        </property>
       </widget>
      </item>

@@ -6,7 +6,9 @@ ReportWidget::ReportWidget(QWidget *parent) :
     ui(new Ui::ReportWidget)
 {
     ui->setupUi(this);
-    ui->radioButton_month->toggle();
+    ui->radioButton_all->toggle();
+    date=ui->dateEdit->dateTime().date();
+
     allCompleteRequests=nullptr;
     timer.setInterval(1000);
     connect(&timer,&QTimer::timeout,this,&ReportWidget::refreshTable);
@@ -69,8 +71,10 @@ void ReportWidget::refreshTable()
 
     std::vector<std::string> invalidRooms=filterRequests(requests);
 
+    float fee=0;
     for(pRequestInfo& request:requests)
     {
+        fee+=request->fee;
         int isInValid=std::count(invalidRooms.begin(),invalidRooms.end(),request->start_time);
         if(isInValid!=0)
             continue;
@@ -106,7 +110,7 @@ void ReportWidget::refreshTable()
     {
         ui->tableWidget->setCurrentItem(oldItems[0]);
     }
-
+    ui->label_fee->setText(QString::number(fee));
 }
 
 void ReportWidget::addItemToRow(int nOldRow, int numth, QString item)
