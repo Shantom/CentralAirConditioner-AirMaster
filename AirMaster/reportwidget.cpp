@@ -20,11 +20,13 @@ ReportWidget::ReportWidget(QWidget *parent) :
 
 }
 
-void ReportWidget::setRoom(QString RoomID, std::map<std::string, std::vector<pRequestInfo> > *allCompleteRequests)
+void ReportWidget::setRoom(QString RoomID, int time, std::map<std::string, std::vector<pRequestInfo> > *allCompleteRequests)
 {
     this->RoomID=RoomID;
     ui->label_roomid->setText(RoomID);
     this->allCompleteRequests=allCompleteRequests;
+    this->time=time;
+    ui->label_times->setText(QString::number(time));
     refreshTable();
 }
 

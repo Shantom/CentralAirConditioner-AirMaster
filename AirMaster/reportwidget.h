@@ -15,7 +15,7 @@ class ReportWidget : public QWidget
 
 public:
     explicit ReportWidget(QWidget *parent = 0);
-    void setRoom(QString RoomID,std::map<std::string, std::vector<pRequestInfo>> *allCompleteRequests);
+    void setRoom(QString RoomID,int time,std::map<std::string, std::vector<pRequestInfo>> *allCompleteRequests);
     ~ReportWidget();
 
 private:
@@ -24,6 +24,7 @@ private:
     std::map<std::string, std::vector<pRequestInfo>>* allCompleteRequests;
     QTimer timer;
     void addItemToRow(int nOldRow, int numth, QString item);
+    int time;
 
 public slots:
     void refreshTable();

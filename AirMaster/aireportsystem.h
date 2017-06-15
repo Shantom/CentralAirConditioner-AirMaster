@@ -33,6 +33,7 @@ public:
     std::map<std::string, std::vector<pRequestInfo>>* getAllCompleteRequests()
     {return &allCompleteRequests;}
 
+    int getSwitchTime(std::string room){return allSwitchTimes[room];}
 private:
     // cached uncomplete RequestInfo
     std::map<std::string, pRequestInfo> allCachedRequests;
