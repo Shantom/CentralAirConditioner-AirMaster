@@ -6,6 +6,7 @@ ReportWidget::ReportWidget(QWidget *parent) :
     ui(new Ui::ReportWidget)
 {
     ui->setupUi(this);
+    ui->radioButton_month->toggle();
     allCompleteRequests=nullptr;
     timer.setInterval(1000);
     connect(&timer,&QTimer::timeout,this,&ReportWidget::refreshTable);
@@ -65,8 +66,15 @@ void ReportWidget::refreshTable()
 
     int nOldRowCount=0;
     std::vector<pRequestInfo> requests=(*allCompleteRequests)[RoomID.toStdString()];
+
+    std::vector<std::string> invalidRooms=filterRequests(requests);
+
     for(pRequestInfo& request:requests)
     {
+        int isInValid=std::count(invalidRooms.begin(),invalidRooms.end(),request->start_time);
+        if(isInValid!=0)
+            continue;
+
         ui->tableWidget->insertRow(nOldRowCount);
 
         QString start_time=QString::fromStdString(request->start_time);
@@ -106,4 +114,73 @@ void ReportWidget::addItemToRow(int nOldRow, int numth, QString item)
     QTableWidgetItem *itemWidget= new QTableWidgetItem(item);
     ui->tableWidget->setItem(nOldRow, numth, itemWidget);
     itemWidget->setFlags(Qt::ItemIsEnabled);
+}
+
+std::vector<std::string> ReportWidget::filterRequests(std::vector<pRequestInfo> &requests)
+{
+    std::vector<std::string> invalidReports;
+
+    if(reportType==ALL)
+        return invalidReports;
+
+    for(pRequestInfo& request:requests)
+    {
+        QDate thisDate=QDateTime::fromString(QString::fromStdString(request->start_time),
+                                             "yyyy-MM-dd--hh-mm-ss").date();
+//        qDebug()<<thisDate.toString();
+        switch (reportType) {
+        case MONTH:
+            if(thisDate.month()!=date.month())
+            {
+                invalidReports.push_back(request->start_time);
+            }
+            break;
+        case WEEK:
+            if(thisDate.weekNumber()!=date.weekNumber())
+            {
+                invalidReports.push_back(request->start_time);
+            }
+            break;
+        case DAY:
+            if(thisDate.day()!=date.day())
+            {
+                invalidReports.push_back(request->start_time);
+            }
+            break;
+
+        default:
+            break;
+        }
+    }
+    return invalidReports;
+}
+
+void ReportWidget::on_radioButton_month_toggled(bool checked)
+{
+    if(checked)
+        reportType=MONTH;
+}
+
+void ReportWidget::on_radioButton_week_toggled(bool checked)
+{
+    if(checked)
+        reportType=WEEK;
+}
+
+void ReportWidget::on_radioButton_day_toggled(bool checked)
+{
+    if(checked)
+        reportType=DAY;
+}
+
+void ReportWidget::on_dateEdit_editingFinished()
+{
+    date=ui->dateEdit->dateTime().date();
+}
+
+void ReportWidget::on_radioButton_all_toggled(bool checked)
+{
+    if(checked)
+        reportType=ALL;
+
 }

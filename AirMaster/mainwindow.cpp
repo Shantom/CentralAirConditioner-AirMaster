@@ -179,7 +179,7 @@ void MainWindow::on_tableWidget_doubleClicked(const QModelIndex &index)
     QString RoomID=ui->tableWidget->item(row,0)->text();
     AiReportSystem* reportSys=resQueueHelper->getResQueueHandler()->getAirReportor();
     auto resquests=reportSys->getAllCompleteRequests();
-    int time=reportSys->getSwitchTime(RoomID);
+    int time=reportSys->getSwitchTime(RoomID.toStdString());
     rw.setRoom(RoomID,time,resquests);
     rw.show();
 }
