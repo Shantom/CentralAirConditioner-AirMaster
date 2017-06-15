@@ -4,6 +4,7 @@ AiReportSystem::AiReportSystem()
 {
     airDatabase = new AirDatabase();
     airDatabase->connectDatabase("127.0.0.1",6379);
+    airDatabase->initAllRequests(allCompleteRequests);
 
 }
 

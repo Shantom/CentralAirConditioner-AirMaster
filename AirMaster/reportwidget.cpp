@@ -20,7 +20,7 @@ ReportWidget::ReportWidget(QWidget *parent) :
 
 }
 
-void ReportWidget::setRoom(QString RoomID, std::map<std::__cxx11::string, std::vector<pRequestInfo> > *allCompleteRequests)
+void ReportWidget::setRoom(QString RoomID, std::map<std::string, std::vector<pRequestInfo> > *allCompleteRequests)
 {
     this->RoomID=RoomID;
     ui->label_roomid->setText(RoomID);
