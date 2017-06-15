@@ -4,7 +4,7 @@ AiReportSystem::AiReportSystem()
 {
     airDatabase = new AirDatabase();
     airDatabase->connectDatabase("127.0.0.1",6379);
-    airDatabase->initAllRequests(allCompleteRequests);
+    airDatabase->initAllRequests(allCompleteRequests,allSwitchTimes);
 
 }
 
@@ -30,4 +30,12 @@ void AiReportSystem::updateRequestComplete(pRequestInfo completeRequestInfo)
 
     airDatabase->addRequestInfo(completeRequestInfo);
 
+}
+
+void AiReportSystem::updateSwitchTimes(std::string room)
+{
+   allSwitchTimes[room]++;
+   airDatabase->updateSwitchTime(room,allSwitchTimes[room]);
+   std::string te= room+" switch times : "+std::to_string(allSwitchTimes[room]);
+   qDebug()<<te.c_str();
 }

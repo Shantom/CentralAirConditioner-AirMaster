@@ -57,7 +57,30 @@ void AirDatabase::addRequestInfo(pRequestInfo requestInfo)
     redisCommand(connector,command.c_str());
 }
 
-void AirDatabase::initAllRequests(std::map<std::string, std::vector<pRequestInfo> > &allCompleteRequests)
+void AirDatabase::updateSwitchTime(std::string room, int times)
+{
+    std::string command;
+    command += ("hmset " +room+"  switch_times "+std::to_string(times));
+    redisCommand(connector,command.c_str());
+}
+
+void AirDatabase::initSwitchTimes(std::vector<std::string> & allRoomsId,std::map<std::string, int> &allSwitchTimes)
+{
+   redisReply* reply;
+   std::string command;
+   for(auto & room :allRoomsId){
+       command.clear();
+       command +=("hmget "+room+" switch_times ");
+       reply = reinterpret_cast<redisReply*>(redisCommand(connector,command.c_str()));
+       if (reply->element[0]->str){
+           allSwitchTimes[room] =std::stoi(reply->element[0]->str);
+       }
+       freeReplyObject(reply);
+   }
+}
+
+void AirDatabase::initAllRequests(std::map<std::string, std::vector<pRequestInfo> > &allCompleteRequests
+                                  ,std::map<std::string, int> &allSwitchTimes)
 {
     // get all rooms Id in database
     std::string command;
@@ -93,6 +116,7 @@ void AirDatabase::initAllRequests(std::map<std::string, std::vector<pRequestInfo
         freeReplyObject(reply);
     }
 
+    initSwitchTimes(allRoomsId,allSwitchTimes);
 
     for (auto& room:allRoomsId){
         for(int i = 0 ; i< allRequestNums[room]; i++){

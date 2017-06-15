@@ -31,7 +31,7 @@ void ResQueueHandler::handlWindRequests()
     for (auto &cl: allClients){
         if (allRequests[cl].size()>0){
             if (allRequests[cl].front()->getType() == START_WIND_PACKET){
-                if (workingCounter < limitWorkingNum){
+                if (workingCounter < limitWorkingNum || allServantsStatus[cl]->working ){
                     std::string velo = reinterpret_cast<StartWindClient*>(allRequests[cl].front())->velocity;
                     cl->sendWind(velo.c_str());
                     allServantsStatus[cl]->velocity = velo;
@@ -101,11 +101,15 @@ void ResQueueHandler::monitoringServant()
                 allServantsStatus[cl]->id = reinterpret_cast<AuthClient*>(rece)->id;
                 allServantsStatus[cl]->onLine = true;
                 cl->sendWorkingState();
+
+                airReportor->updateSwitchTimes(allServantsStatus[cl]->room);
+
                 qDebug()<<" get a auth:    "<<rece->toJsonStr().c_str();
             }
             // collecting wind requests
             else{
                 qDebug()<<" get a request:    "<<rece->toJsonStr().c_str();
+                allRequests[cl].clear();
                 allRequests[cl].push_back(rece);
             }
         }

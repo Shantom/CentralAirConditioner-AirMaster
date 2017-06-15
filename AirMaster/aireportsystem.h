@@ -29,6 +29,7 @@ public:
     // request stop, update and fill a complete requestinfo
     void updateRequestComplete(pRequestInfo completeRequestInfo);
 
+    void updateSwitchTimes(std::string room);
     std::map<std::string, std::vector<pRequestInfo>>* getAllCompleteRequests()
     {return &allCompleteRequests;}
 
@@ -38,6 +39,7 @@ private:
 
     // key is roomId, value is its ReqeustInfos
     std::map<std::string, std::vector<pRequestInfo>> allCompleteRequests;
+    std::map<std::string, int> allSwitchTimes;
 
     AirDatabase *airDatabase;
 };
