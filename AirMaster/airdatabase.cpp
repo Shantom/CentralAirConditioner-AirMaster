@@ -88,14 +88,15 @@ void AirDatabase::initAllRequests(std::map<std::string, std::vector<pRequestInfo
         command.clear();
         command += ("hmget "+room+" maxRequestNum ");
         reply = reinterpret_cast<redisReply*>(redisCommand(connector,command.c_str()));
-        allRequestNums[room] = reply->integer;
+        qDebug()<< reply->str;
+        allRequestNums[room] = std::stoi(std::string(reply->element[0]->str));
         freeReplyObject(reply);
     }
 
 
     for (auto& room:allRoomsId){
-        for(int i =1 ; i< allRequestNums[room]+1; i++){
-            pRequestInfo requestIn = reinterpret_cast<pRequestInfo>(new pRequestInfo());
+        for(int i = 0 ; i< allRequestNums[room]; i++){
+            pRequestInfo requestIn = reinterpret_cast<pRequestInfo>(new RequestInfo());
             requestIn->roomId = room;
 
             std::string basicStr = ("hmget "+room+":allRequests:"+std::to_string(i));
@@ -103,38 +104,40 @@ void AirDatabase::initAllRequests(std::map<std::string, std::vector<pRequestInfo
             command.clear();
             command += (basicStr + " start_time");
             reply = reinterpret_cast<redisReply*>(redisCommand(connector,command.c_str()));
-            requestIn->start_time = std::string(reply->str);
+            requestIn->start_time =std::string(reply->element[0]->str);
             freeReplyObject(reply);
 
             command.clear();
             command += (basicStr + " end_time");
             reply = reinterpret_cast<redisReply*>(redisCommand(connector,command.c_str()));
-            requestIn->end_time= std::string(reply->str);
+            requestIn->end_time= std::string(reply->element[0]->str);
             freeReplyObject(reply);
 
             command.clear();
             command += (basicStr + " velocity ");
             reply = reinterpret_cast<redisReply*>(redisCommand(connector,command.c_str()));
-            requestIn->velocity= std::string(reply->str);
+            requestIn->velocity= std::string(reply->element[0]->str);
             freeReplyObject(reply);
 
             command.clear();
             command += (basicStr + " start_temperature");
             reply =reinterpret_cast<redisReply*>(redisCommand(connector,command.c_str()));
-            requestIn->start_temperature = reply->integer;
+            requestIn->start_temperature = std::stoi(reply->element[0]->str);
             freeReplyObject(reply);
 
             command.clear();
             command += (basicStr + " end_temperature");
             reply = reinterpret_cast<redisReply*>(redisCommand(connector,command.c_str()));
-            requestIn->end_temperature = reply->integer;
+            requestIn->end_temperature =std::stoi(reply->element[0]->str);
             freeReplyObject(reply);
 
             command.clear();
             command += (basicStr + " fee");
             reply = reinterpret_cast<redisReply*>(redisCommand(connector,command.c_str()));
-            requestIn->fee = reply->integer;
+            requestIn->fee = std::stof(reply->element[0]->str);
             freeReplyObject(reply);
+
+            allCompleteRequests[room].push_back(requestIn);
         }
 
     }
