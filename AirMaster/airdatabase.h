@@ -17,6 +17,10 @@ public:
 
     void initAllRequests(std::map<std::string, std::vector<pRequestInfo> > &allCompleteRequests
                                       ,std::map<std::string, int> &allSwitchTimes);
+
+    bool checkUserId(std::string roomId, std::string userId);
+
+
 private:
     redisContext *connector;
     std::map<std::string, int> allRequestNums;

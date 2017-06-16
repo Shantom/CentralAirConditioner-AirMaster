@@ -30,7 +30,7 @@ private:
     std::map<std::string, std::vector<pRequestInfo>>* allCompleteRequests;
     QTimer timer;
     void addItemToRow(int nOldRow, int numth, QString item);
-    std::vector<std::__cxx11::string> filterRequests(std::vector<pRequestInfo> &requests);
+    std::vector<std::string> filterRequests(std::vector<pRequestInfo> &requests);
     int time;
     type reportType;
     QDate date;

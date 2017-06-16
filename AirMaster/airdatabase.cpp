@@ -169,3 +169,8 @@ void AirDatabase::initAllRequests(std::map<std::string, std::vector<pRequestInfo
 
 }
 
+bool AirDatabase::checkUserId(std::string roomId,std::string userId)
+{
+
+}
+

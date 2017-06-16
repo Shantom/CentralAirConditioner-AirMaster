@@ -97,6 +97,7 @@ void ResQueueHandler::monitoringServant()
             }
             // get room,id for this tcp pipe, and set its status onLine
             else if (rece->getType() == AUTH_PACKET){
+
                 allServantsStatus[cl]->room = reinterpret_cast<AuthClient*>(rece)->room;
                 allServantsStatus[cl]->id = reinterpret_cast<AuthClient*>(rece)->id;
                 allServantsStatus[cl]->onLine = true;
@@ -164,7 +165,7 @@ void ResQueueHandler::checkServants()
     }
 
     allClients.erase(std::remove_if(allClients.begin(),allClients.end(),
-                   [](TcpPipeToServant* servant)->bool{return servant->getIsDead();}),
+                                    [](TcpPipeToServant* servant)->bool{return servant->getIsDead();}),
             allClients.end());
 }
 
