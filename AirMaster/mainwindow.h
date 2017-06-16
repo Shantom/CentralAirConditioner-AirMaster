@@ -34,6 +34,8 @@ private slots:
 
     void on_tableWidget_doubleClicked(const QModelIndex &index);
 
+    void on_pushButton_clicked();
+
 private:
     void addItemToRow(int nOldRow, int numth, QString item);
     Ui::MainWindow *ui;
@@ -43,12 +45,15 @@ private:
 
     ReQueueHelper* resQueueHelper;
 
-    int upperBound=23;
-    int lowerBound=14;
+    int upperBound=25;
+    int lowerBound=18;
 
     QTimer timer;
 
     ReportWidget rw;
+
+    std::map<std::string,std::vector<pRequestInfo>>  blank;
+
 
 };
 

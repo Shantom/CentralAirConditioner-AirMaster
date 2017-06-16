@@ -62,8 +62,8 @@ void MainWindow::on_pushButton_cool_clicked()
     ui->pushButton_cool->setEnabled(false);
     ui->label_mode->setText("COOLER");
     ui->label_mode->setStyleSheet("color:lightblue;font-weight:bold");
-    lowerBound=14;
-    upperBound=23;
+    lowerBound=18;
+    upperBound=25;
 }
 
 void MainWindow::on_pushButton_heat_clicked()
@@ -75,8 +75,8 @@ void MainWindow::on_pushButton_heat_clicked()
     ui->pushButton_cool->setEnabled(true);
     ui->label_mode->setText("HEATER");
     ui->label_mode->setStyleSheet("color:red;font-weight:bold");
-    lowerBound=27;
-    upperBound=35;
+    lowerBound=25;
+    upperBound=30;
 }
 
 void MainWindow::on_pushButton_set_clicked()
@@ -184,4 +184,11 @@ void MainWindow::on_tableWidget_doubleClicked(const QModelIndex &index)
     int time=reportSys->getSwitchTime(RoomID.toStdString());
     rw.setRoom(RoomID,time,resquests);
     rw.show();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    rw.setRoom(QString(""),0,&blank);
+    rw.show();
+
 }
